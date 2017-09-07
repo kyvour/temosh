@@ -1,0 +1,12 @@
+{
+    "name": "kyvour/temosh",
+    "description": "Test MongoDB Shell",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Yustyk",
+            "email": "a.yustyk@gmail.com"
+        }
+    ],
+    "require": {}
+}
