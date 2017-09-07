@@ -1,4 +1,4 @@
-#1. Prepare test data:
+# 1. Prepare test data:
 
 You can import test data to the new database/collection using prepared data from restaurants.json file.
 In a case when you have installed `mongoimport` tool, you can use following command:
