@@ -4,21 +4,26 @@
     "type": "library",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Andrew Yustyk",
-            "email": "a.yustyk@gmail.com"
-        }
+        { "name": "Andrew Yustyk", "email": "a.yustyk@gmail.com" }
     ],
     "bin": [
         "temosh"
     ],
+    "autoload": {
+        "psr-4": { "Temosh\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Temosh\\Test\\": "tests/Temosh/Test" }
+    },
     "require": {
         "php": ">=5.6",
-        "symfony/console": "^3.3"
+        "ext-mongodb": "*",
+        "symfony/console": "^3.3",
+        "mongodb/mongodb": "^1.1"
     },
-    "autoload": {
-        "psr-4": {
-            "Temosh\\": "src/Temosh/"
-        }
+    "require-dev": {
+        "phpunit/phpunit": "^5.7.20",
+        "symfony/phpunit-bridge": "^3.3",
+        "hoa/console": "^3.17"
     }
 }
