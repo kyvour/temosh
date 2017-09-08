@@ -22,6 +22,7 @@ before_install:
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv config-rm xdebug.ini
   - composer --verbose self-update --stable
+  - php --version
   - composer --version
 
 install:
