@@ -16,9 +16,10 @@ addons:
       - php-mongodb
 
 before_install:
-  - echo 'sendmail_path = /bin/true' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - sudo apt-get update
+  - sudo apt-get install -y --force-yes php-mongodb
+  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv config-rm xdebug.ini
-  - phpenv config-add mongodb.ini
   - composer --verbose self-update --stable
   - composer --version
 
