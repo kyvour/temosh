@@ -64,8 +64,8 @@ class BootLoader
 
                 // Make sure that autoloader works.
                 if (
-                  is_a($classLoader, \Composer\Autoload\ClassLoader::class) &&
-                  $classLoader->loadClass($this->appClassName)
+                    is_a($classLoader, \Composer\Autoload\ClassLoader::class) &&
+                    $classLoader->loadClass($this->appClassName)
                 ) {
                     return true;
                 }
@@ -86,12 +86,12 @@ class BootLoader
     protected function autoloaderSuggestions($basePath)
     {
         return [
-          // 'local' means that autoload.php is inside of Temosh.
-          // That is, Temosh is its own Composer project.
-          'local' => $basePath . '/vendor/autoload.php',
-          // 'global' means autoload.php is outside of Temosh.
-          // That is, Temosh is a dependency of a bigger project.
-          'global' => $basePath . '/../../../vendor/autoload.php',
+            // 'local' means that autoload.php is inside of Temosh.
+            // That is, Temosh is its own Composer project.
+            'local' => $basePath . '/vendor/autoload.php',
+            // 'global' means autoload.php is outside of Temosh.
+            // That is, Temosh is a dependency of a bigger project.
+            'global' => $basePath . '/../../../vendor/autoload.php',
         ];
     }
 }
