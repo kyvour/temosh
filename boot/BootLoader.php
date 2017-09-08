@@ -34,8 +34,13 @@ class BootLoader
             $msg .= 'Unable to load autoload.php.' . PHP_EOL;
             $msg .= 'Run composer install to fetch dependencies and write autoload.php (http://docs.drush.org/en/master/install/).' . PHP_EOL;
 
-            fwrite(STDERR, $msg);
-            fclose(STDERR);
+            // Write error message to STDERR channel.
+            $stderr = fopen('php://stderr', 'wb');
+            if ($stderr !== false) {
+                fwrite($stderr, $msg);
+                fclose($stderr);
+            }
+
             exit(1);
         }
     }
