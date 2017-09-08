@@ -7,14 +7,18 @@ php:
   - 7.0
   - 7.1
 
+services:
+  - mongodb
+
 addons:
   apt:
     packages:
-    - php-mongodb
+      - php-mongodb
 
 before_install:
   - echo 'sendmail_path = /bin/true' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini
+  - phpenv config-add mongodb.ini
   - composer --verbose self-update --stable
   - composer --version
 
