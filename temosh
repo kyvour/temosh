@@ -1,3 +1,8 @@
 #!/usr/bin/env php
 <?php
+
+// Require BootLoader class because composer's autoloader isn't available yet.
+require __DIR__ . '/boot/BootLoader.php';
+\Temosh\Boot\BootLoader::boot(__DIR__);
+
 require __DIR__ . '/temosh_cli.php';

@@ -14,7 +14,7 @@ class BootLoader
      * @var string
      *  The name of main app class. Required for autoloader checking.
      */
-    protected $appClassName = \Temosh\Temosh::class;
+    protected $appClassName = \Temosh\Console\Shell::class;
 
     /**
      * Boot ups composer autoloader.
