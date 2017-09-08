@@ -1,13 +1,12 @@
 <?php
 
-// Require BootLoader class because composer's autoloader isn't available yet.
-require __DIR__ . '/boot/BootLoader.php';
-\Temosh\Boot\BootLoader::boot(__DIR__);
+use Temosh\Console\Command\SelectCommand;
+use Temosh\Console\Shell;
 
-use Symfony\Component\Console\Application;
+$application = new Shell();
+$command = new SelectCommand();
 
-$application = new Application();
+$application->add($command);
 
-// ... register commands
-
+$application->setDefaultCommand($command->getName(), TRUE);
 $application->run();
