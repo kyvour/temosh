@@ -1,6 +1,7 @@
 {
     "name": "kyvour/temosh",
     "description": "Test MongoDB Shell",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -8,5 +9,16 @@
             "email": "a.yustyk@gmail.com"
         }
     ],
-    "require": {}
+    "bin": [
+        "temosh"
+    ],
+    "require": {
+        "php": ">=5.6",
+        "symfony/console": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Temosh\\": "src/Temosh/"
+        }
+    }
 }
