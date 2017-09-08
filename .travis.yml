@@ -17,6 +17,7 @@ addons:
 
 before_install:
   - sudo apt-get update
+  - sudo pecl channel-update pecl.php.net
   - pecl install mongodb
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv config-rm xdebug.ini
