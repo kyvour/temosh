@@ -10,16 +10,10 @@ php:
 services:
   - mongodb
 
-addons:
-  apt:
-    packages:
-      - php-mongodb
-
 before_install:
   - sudo apt-get update
   - pecl channel-update pecl.php.net
   - pecl install mongodb
-  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - phpenv config-rm xdebug.ini
   - composer --verbose self-update --stable
   - php --version
