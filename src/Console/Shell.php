@@ -4,10 +4,13 @@ namespace Temosh\Console;
 
 use Symfony\Component\Console\Application;
 
+/**
+ * Class Shell. Main application class for Temosh CLI.
+ */
 class Shell extends Application
 {
     const VERSION = 'v0.0.1';
-    const NAME = 'Temosh\Console';
+    const NAME = 'Temosh';
 
     /**
      * {@inheritdoc}
