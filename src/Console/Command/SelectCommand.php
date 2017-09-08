@@ -40,7 +40,6 @@ class SelectCommand extends Command
      * DB argument definition.
      *
      * @return \Symfony\Component\Console\Input\InputArgument
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function dbArgument() {
         return new InputArgument(
@@ -54,7 +53,6 @@ class SelectCommand extends Command
      * Host option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function hostOption() {
         return new InputOption(
@@ -70,7 +68,6 @@ class SelectCommand extends Command
      * Port option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function portOption() {
         return new InputOption(
@@ -86,7 +83,6 @@ class SelectCommand extends Command
      * Username option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function usernameOption() {
         return new InputOption(
@@ -117,7 +113,6 @@ class SelectCommand extends Command
      * Authentication Database option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function authenticationDatabaseOption() {
         return new InputOption(
@@ -128,6 +123,9 @@ class SelectCommand extends Command
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Dummy output...');
