@@ -8,5 +8,5 @@ $command = new SelectCommand();
 
 $application->add($command);
 
-$application->setDefaultCommand($command->getName(), TRUE);
+$application->setDefaultCommand($command->getName(), true);
 $application->run();

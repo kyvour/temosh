@@ -28,12 +28,12 @@ class SelectCommand extends Command
             $this->usernameOption(),
             $this->passwordOption(),
             $this->authenticationDatabaseOption(),
-            $this->dbArgument()
+            $this->dbArgument(),
         ]);
 
         $this->setName('select')
-          ->setDescription('Selects data from MongoDB collection.')
-          ->setDefinition($definition);
+            ->setDescription('Selects data from MongoDB collection.')
+            ->setDefinition($definition);
     }
 
     /**
@@ -41,11 +41,12 @@ class SelectCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputArgument
      */
-    protected function dbArgument() {
+    protected function dbArgument()
+    {
         return new InputArgument(
-          'db',
-          InputArgument::REQUIRED,
-          'database name to connect to'
+            'db',
+            InputArgument::REQUIRED,
+            'database name to connect to'
         );
     }
 
@@ -54,13 +55,14 @@ class SelectCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function hostOption() {
+    protected function hostOption()
+    {
         return new InputOption(
-          'host',
-          'H',
-          InputOption::VALUE_REQUIRED,
-          'server to connect to',
-          '127.0.0.1'
+            'host',
+            'H',
+            InputOption::VALUE_REQUIRED,
+            'server to connect to',
+            '127.0.0.1'
         );
     }
 
@@ -69,13 +71,14 @@ class SelectCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function portOption() {
+    protected function portOption()
+    {
         return new InputOption(
-          'port',
-          'P',
-          InputOption::VALUE_REQUIRED,
-          'port to connect to',
-          '27017'
+            'port',
+            'P',
+            InputOption::VALUE_REQUIRED,
+            'port to connect to',
+            '27017'
         );
     }
 
@@ -84,12 +87,13 @@ class SelectCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function usernameOption() {
+    protected function usernameOption()
+    {
         return new InputOption(
-          'username',
-          'u',
-          InputOption::VALUE_OPTIONAL,
-          'username for authentication'
+            'username',
+            'u',
+            InputOption::VALUE_OPTIONAL,
+            'username for authentication'
         );
     }
 
@@ -99,13 +103,14 @@ class SelectCommand extends Command
      * @return \Symfony\Component\Console\Input\InputOption
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function passwordOption() {
+    protected function passwordOption()
+    {
         return new InputOption(
-          'password',
-          'p',
-          InputOption::VALUE_OPTIONAL,
-          'password for authentication',
-          ''
+            'password',
+            'p',
+            InputOption::VALUE_OPTIONAL,
+            'password for authentication',
+            ''
         );
     }
 
@@ -114,12 +119,13 @@ class SelectCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function authenticationDatabaseOption() {
+    protected function authenticationDatabaseOption()
+    {
         return new InputOption(
-          'authenticationDatabase',
-          null,
-          InputOption::VALUE_REQUIRED,
-          'user source (defaults to db name)'
+            'authenticationDatabase',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'user source (defaults to db name)'
         );
     }
 

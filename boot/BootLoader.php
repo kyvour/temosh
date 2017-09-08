@@ -22,7 +22,8 @@ class BootLoader
      * @param $basePath
      *  The base path of application.
      */
-    public static function boot($basePath) {
+    public static function boot($basePath)
+    {
         $bootLoader = new static();
 
         $suggestions = $bootLoader->autoloaderSuggestions($basePath);
