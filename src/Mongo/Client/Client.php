@@ -122,7 +122,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      */
     public function executeQuery($collectionName, Query $query, ReadPreference $readPreference = null)
     {
-        $namespace = $this->getDbName() . '.' . $collectionName;
+        $namespace = $this->getDatabase()->selectCollection($collectionName)->getNamespace();
 
         return $this->getManager()->executeQuery($namespace, $query, $readPreference);
     }
