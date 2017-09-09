@@ -59,7 +59,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setValidator($this->optionsValidator->validateDbName())
             ->setMaxAttempts(null);
 
-        return (string) parent::ask($input, $output, $question);
+        return (string) $this->ask($input, $output, $question);
     }
 
     /**
@@ -78,7 +78,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setNormalizer($this->optionsNormalizer->normalizeHost())
             ->setValidator($this->optionsValidator->validateHost());
 
-        return (string) parent::ask($input, $output, $question);
+        return (string) $this->ask($input, $output, $question);
     }
 
     /**
@@ -97,7 +97,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setValidator($this->optionsNormalizer->normalizePort())
             ->setValidator($this->optionsValidator->validatePort());
 
-        return (int) parent::ask($input, $output, $question);
+        return (int) $this->ask($input, $output, $question);
     }
 
     /**
@@ -110,7 +110,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setNormalizer($this->optionsNormalizer->normalizeUser())
             ->setValidator($this->optionsValidator->validateUser());
 
-        return (string) parent::ask($input, $output, $question);
+        return (string) $this->ask($input, $output, $question);
     }
 
     /**
@@ -124,6 +124,6 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setHidden(true)
             ->setHiddenFallback(true);
 
-        return (string) parent::ask($input, $output, $question);
+        return (string) $this->ask($input, $output, $question);
     }
 }
