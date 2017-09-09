@@ -16,7 +16,11 @@ class OptionsNormalizer implements OptionsNormalizerInterface
     protected function normalizeString()
     {
         return function ($value) {
-            return $value ? trim($value) : '';
+            if (empty($value)) {
+                return '';
+            }
+
+            return trim((string) $value);
         };
     }
 
@@ -29,7 +33,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
         return function ($value) {
             $value = trim($value);
 
-            return $value ? (int)$value : 0;
+            return $value ? (int) $value : 0;
         };
     }
 

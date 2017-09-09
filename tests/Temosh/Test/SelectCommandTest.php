@@ -41,7 +41,7 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
     public function requiredArgumentsProvider()
     {
         return [
-          ['db'],
+            ['db'],
         ];
     }
 
@@ -53,11 +53,11 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
     public function requiredOptionsProvider()
     {
         return [
-          ['host'],
-          ['port'],
-          ['user'],
-          ['pass'],
-          ['authenticationDatabase'],
+            ['host'],
+            ['port'],
+            ['user'],
+            ['pass'],
+            ['authenticationDatabase'],
         ];
     }
 

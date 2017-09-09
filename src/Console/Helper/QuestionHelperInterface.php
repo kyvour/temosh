@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface QuestionHelperInterface
 {
+
     /**
      * Asks user for the database name.
      *

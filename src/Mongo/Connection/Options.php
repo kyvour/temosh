@@ -2,8 +2,12 @@
 
 namespace Temosh\Mongo\Connection;
 
-
-class Options implements OptionsInterface
+/**
+ * Class Options
+ *
+ * Contains default options for connection to MongoDB.
+ */
+class Options
 {
 
     /**

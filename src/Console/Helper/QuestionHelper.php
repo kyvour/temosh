@@ -17,12 +17,12 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
 {
 
     /**
-     * @var \Temosh\Mongo\Connection\OptionsValidator
+     * @var \Temosh\Mongo\Connection\OptionsValidatorInterface
      */
     private $optionsValidator;
 
     /**
-     * @var \Temosh\Mongo\Connection\OptionsNormalizer
+     * @var \Temosh\Mongo\Connection\OptionsNormalizerInterface
      */
     private $optionsNormalizer;
 
@@ -59,7 +59,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setValidator($this->optionsValidator->validateDbName())
             ->setMaxAttempts(null);
 
-        return parent::ask($input, $output, $question);
+        return (string) parent::ask($input, $output, $question);
     }
 
     /**
@@ -78,7 +78,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setNormalizer($this->optionsNormalizer->normalizeHost())
             ->setValidator($this->optionsValidator->validateHost());
 
-        return parent::ask($input, $output, $question);
+        return (string) parent::ask($input, $output, $question);
     }
 
     /**
@@ -97,7 +97,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setValidator($this->optionsNormalizer->normalizePort())
             ->setValidator($this->optionsValidator->validatePort());
 
-        return parent::ask($input, $output, $question);
+        return (int) parent::ask($input, $output, $question);
     }
 
     /**
@@ -110,7 +110,7 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setNormalizer($this->optionsNormalizer->normalizeUser())
             ->setValidator($this->optionsValidator->validateUser());
 
-        return parent::ask($input, $output, $question);
+        return (string) parent::ask($input, $output, $question);
     }
 
     /**
@@ -124,6 +124,6 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
             ->setHidden(true)
             ->setHiddenFallback(true);
 
-        return parent::ask($input, $output, $question);
+        return (string) parent::ask($input, $output, $question);
     }
 }

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ReadCommand extends BaseCommand
 {
+
     /**
      * {@inheritdoc}
      */
