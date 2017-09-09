@@ -1,10 +1,11 @@
 <?php
 
-use Temosh\Console\Command\SelectCommand;
+use Temosh\Console\Command\ReadCommand;
 use Temosh\Console\Shell;
 
 $application = new Shell();
-$command = new SelectCommand();
+
+$command = new ReadCommand();
 
 $application->add($command);
 

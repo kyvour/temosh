@@ -2,7 +2,7 @@
 
 namespace Temosh\Test;
 
-use Temosh\Console\Command\SelectCommand;
+use Temosh\Console\Command\ReadCommand;
 
 /**
  * @coversDefaultClass \Temosh\Console\Command\SelectCommand
@@ -13,13 +13,19 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
 
     private $command;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->command = new SelectCommand();
+        $this->command = new ReadCommand();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown()
     {
         parent::tearDown();
@@ -27,6 +33,11 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
         $this->command = null;
     }
 
+    /**
+     * Data provider for testRequiredArguments
+     *
+     * @return array
+     */
     public function requiredArgumentsProvider()
     {
         return [
@@ -34,13 +45,18 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * Data provider for testRequiredArguments
+     *
+     * @return array
+     */
     public function requiredOptionsProvider()
     {
         return [
           ['host'],
           ['port'],
-          ['username'],
-          ['password'],
+          ['user'],
+          ['pass'],
           ['authenticationDatabase'],
         ];
     }
@@ -49,6 +65,9 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
      * Tests for required arguments for SelectCommand.
      *
      * @dataProvider requiredArgumentsProvider
+     *
+     * @param $argName
+     *  The argument name.
      */
     public function testRequiredArguments($argName)
     {
@@ -60,6 +79,9 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
      * Tests for required arguments for SelectCommand.
      *
      * @dataProvider requiredOptionsProvider
+     *
+     * @param $optionName
+     *  The option name.
      */
     public function testSelectCommand($optionName)
     {

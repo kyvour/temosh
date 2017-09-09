@@ -8,13 +8,14 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Temosh\Mongo\Connection\Options;
 
 /**
  * Class SelectCommand
  *
  * The command for retrieving dta from MongoDB.
  */
-class SelectCommand extends Command
+abstract class BaseCommand extends Command
 {
 
     /**
@@ -31,7 +32,7 @@ class SelectCommand extends Command
             $this->dbArgument(),
         ]);
 
-        $this->setName('select')
+        $this->setName('read')
             ->setDescription('Selects data from MongoDB collection.')
             ->setDefinition($definition);
     }
@@ -60,9 +61,9 @@ class SelectCommand extends Command
         return new InputOption(
             'host',
             'H',
-            InputOption::VALUE_REQUIRED,
+            InputOption::VALUE_OPTIONAL,
             'server to connect to',
-            '127.0.0.1'
+            Options::DEFAULT_HOST
         );
     }
 
@@ -76,9 +77,9 @@ class SelectCommand extends Command
         return new InputOption(
             'port',
             'P',
-            InputOption::VALUE_REQUIRED,
+            InputOption::VALUE_OPTIONAL,
             'port to connect to',
-            '27017'
+            Options::DEFAULT_PORT
         );
     }
 
@@ -90,10 +91,11 @@ class SelectCommand extends Command
     protected function usernameOption()
     {
         return new InputOption(
-            'username',
+            'user',
             'u',
             InputOption::VALUE_OPTIONAL,
-            'username for authentication'
+            'username for authentication',
+            ''
         );
     }
 
@@ -106,7 +108,7 @@ class SelectCommand extends Command
     protected function passwordOption()
     {
         return new InputOption(
-            'password',
+            'pass',
             'p',
             InputOption::VALUE_OPTIONAL,
             'password for authentication',
@@ -124,16 +126,48 @@ class SelectCommand extends Command
         return new InputOption(
             'authenticationDatabase',
             null,
-            InputOption::VALUE_REQUIRED,
-            'user source (defaults to db name)'
+            InputOption::VALUE_OPTIONAL,
+            'database for authentication'
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Dummy output...');
+        parent::interact($input, $output);
+
+        /** @var \Temosh\Console\Helper\QuestionHelperInterface $helper */
+        $helper = $this->getHelper('temosh_question');
+
+        // Ask user for the host if option was entered without value.
+        if ($input->getOption('host') === null) {
+            $input->setOption('host', $helper->askHost($input, $output));
+        }
+
+        // Ask user for the port if option was entered without value.
+        if ($input->getOption('port') === null) {
+            $input->setOption('port', $helper->askPort($input, $output));
+        }
+
+        // Ask user for the username if option was entered without value.
+        if ($input->getOption('user') === null) {
+            $input->setOption('user', $helper->askUser($input, $output));
+        }
+
+        // Ask user for the password if option was entered without value.
+        if ($input->getOption('pass') === null) {
+            $input->setOption('pass', $helper->askPass($input, $output));
+        }
+
+        // Ask user for the database name if argument is missed.
+        if ($input->getArgument('db') === null) {
+            $input->setArgument('db', $helper->askDbName($input, $output));
+        }
+
+        // Set auth database to null if its value is empty.
+        $authDb = trim($input->getOption('authenticationDatabase'));
+        $input->setOption('authenticationDatabase', $authDb ?: null);
     }
 }
