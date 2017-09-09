@@ -11,8 +11,8 @@ interface QuestionHelperInterface
     /**
      * Asks user for the database name.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface|null $input
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return string The name of the database to connect to.
      *  The name of the database to connect to.

@@ -33,7 +33,7 @@ class BootLoader
         if (!$isAutoloadConnected) {
             $msg = '';
             $msg .= 'Unable to load autoload.php.' . PHP_EOL;
-            $msg .= 'Run composer install to fetch dependencies and write autoload.php (http://docs.drush.org/en/master/install/).' . PHP_EOL;
+            $msg .= 'Run composer install to fetch dependencies and write autoload.php.' . PHP_EOL;
 
             // Write error message to STDERR channel.
             $stderr = fopen('php://stderr', 'wb');
