@@ -44,5 +44,4 @@ class Shell extends Application
     {
         $this->getHelperSet()->set($helper);
     }
-
 }

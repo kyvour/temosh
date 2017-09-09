@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutChangesToGlobalState="true"
-         backupGlobals="false"
-         colors="true"
-         bootstrap="vendor/autoload.php"
-         verbose="true">
+         beStrictAboutChangesToGlobalState="true">
     <php>
         <!-- Set error reporting to E_ALL. -->
         <ini name="error_reporting" value="32767"/>
@@ -22,4 +26,9 @@
     <listeners>
         <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 </phpunit>
