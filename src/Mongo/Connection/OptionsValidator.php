@@ -10,7 +10,7 @@ class OptionsValidator implements OptionsValidatorInterface
 {
 
     /**
-     * @return callable
+     * @return \Closure
      *  Closure for non-empty required string validation.
      */
     protected function validateRequiredString()
@@ -31,7 +31,7 @@ class OptionsValidator implements OptionsValidatorInterface
     }
 
     /**
-     * @return callable
+     * @return \Closure
      *  Closure for non-empty optional string validation.
      */
     protected function validateOptionalString()

@@ -10,7 +10,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
 {
 
     /**
-     * @return callable
+     * @return \Closure
      *  Closure for non-empty required string normalization.
      */
     protected function normalizeString()
@@ -27,7 +27,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
     }
 
     /**
-     * @return callable
+     * @return \Closure
      *  Closure for integer validation.
      */
     protected function normalizeInteger()

@@ -10,31 +10,31 @@ interface OptionsValidatorInterface
 {
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for host validation.
      */
     public function validateHost();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for port validation.
      */
     public function validatePort();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for user validation.
      */
     public function validateUser();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for password validation.
      */
     public function validatePass();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for password validation.
      */
     public function validateDbName();

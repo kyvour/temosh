@@ -10,25 +10,25 @@ interface OptionsNormalizerInterface
 {
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for host normalization.
      */
     public function normalizeHost();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for port normalization.
      */
     public function normalizePort();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for user normalization.
      */
     public function normalizeUser();
 
     /**
-     * @return callable
+     * @return \Closure
      *  The closure for password normalization.
      */
     public function normalizeDbName();
