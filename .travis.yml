@@ -14,8 +14,7 @@ before_install:
   - sudo apt-get update
   - pecl channel-update pecl.php.net
   - pecl install mongodb
-  - phpenv config-rm xdebug.ini
-  - composer --verbose self-update --stable
+  - composer self-update --stable
   - php --version
   - composer --version
 
