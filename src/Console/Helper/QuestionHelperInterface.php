@@ -14,7 +14,7 @@ interface QuestionHelperInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return string The name of the database to connect to.
+     * @return string
      *  The name of the database to connect to.
      */
     public function askDbName(InputInterface $input, OutputInterface $output);
@@ -25,7 +25,7 @@ interface QuestionHelperInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return string The host to connect to.
+     * @return string
      *  The host to connect to.
      */
     public function askHost(InputInterface $input, OutputInterface $output);
@@ -36,8 +36,8 @@ interface QuestionHelperInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int The port to connect to.
-     * The port to connect to.
+     * @return int
+     *  The port to connect to.
      */
     public function askPort(InputInterface $input, OutputInterface $output);
 
@@ -47,8 +47,8 @@ interface QuestionHelperInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return string The database user.
-     * The database user.
+     * @return string
+     *  The database user.
      */
     public function askUser(InputInterface $input, OutputInterface $output);
 
@@ -58,8 +58,19 @@ interface QuestionHelperInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return string The database password.
-     * The database password.
+     * @return string
+     *  The database password.
      */
     public function askPass(InputInterface $input, OutputInterface $output);
+
+    /**
+     * Asks user for the query.
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return string
+     *  The SQL query string.
+     */
+    public function askQuery(InputInterface $input, OutputInterface $output);
 }

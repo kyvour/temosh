@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Temosh\Mongo\Client\Client;
 use Temosh\Mongo\Connection\Options;
 
 /**
@@ -17,6 +18,28 @@ use Temosh\Mongo\Connection\Options;
  */
 abstract class BaseCommand extends Command
 {
+
+    /**
+     * @var \Temosh\Mongo\Client\Client
+     */
+    private $mongoClient;
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *  The Input object.
+     * @param bool $forceNew
+     *  Flag indicates that new mongo client should be created even it already exists.
+     *
+     * @return \Temosh\Mongo\Client\Client
+     */
+    public function getMongoClientFromInput(InputInterface $input, $forceNew = false)
+    {
+        if ($this->mongoClient === null || ((bool) $forceNew)) {
+            $this->mongoClient = Client::fromUserInput($input);
+        }
+
+        return $this->mongoClient;
+    }
 
     /**
      * {@inheritdoc}

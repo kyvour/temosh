@@ -126,4 +126,14 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
 
         return (string) $this->ask($input, $output, $question);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function askQuery(InputInterface $input, OutputInterface $output)
+    {
+        $question = new Question('Query: ');
+
+        return (string) $this->ask($input, $output, $question);
+    }
 }
