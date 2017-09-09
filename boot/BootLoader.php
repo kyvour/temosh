@@ -27,7 +27,7 @@ class BootLoader
         $bootLoader = new static();
 
         $suggestions = $bootLoader->autoloaderSuggestions($basePath);
-        $isAutoloadConnected = $bootLoader->connectAutoloader($suggestions);
+        $isAutoloadConnected = $bootLoader->autoload($suggestions);
 
         // Force exit if autoloader wasn't included.
         if (!$isAutoloadConnected) {
@@ -49,13 +49,13 @@ class BootLoader
     /**
      * Includes composer autoloader.
      *
-     * @param string[] $suggestions
+     * @param array <string,string> $suggestions
      *  An array with possible composer autoload files.
      *
      * @return bool
      *  Returns true if autoloader was included and false otherwise.
      */
-    protected function connectAutoloader($suggestions)
+    protected function autoload($suggestions)
     {
         // Do nothing if autoloader was already included.
         if (class_exists($this->appClassName, false)) {
@@ -87,7 +87,7 @@ class BootLoader
      * @param $basePath
      *  The base path of application.
      *
-     * @return string[]
+     * @return array<string,string>
      */
     protected function autoloaderSuggestions($basePath)
     {
