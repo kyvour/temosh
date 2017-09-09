@@ -13,7 +13,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      * @return callable
      *  Closure for non-empty required string normalization.
      */
-    protected function stringNormalizer()
+    protected function normalizeString()
     {
         $normalizer = function ($value) {
             if (empty($value)) {
@@ -30,7 +30,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      * @return callable
      *  Closure for integer validation.
      */
-    protected function integerNormalizer()
+    protected function normalizeInteger()
     {
         $normalizer = function ($value) {
             $value = trim($value);
@@ -46,7 +46,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      */
     public function normalizePort()
     {
-        return $this->integerNormalizer();
+        return $this->normalizeInteger();
     }
 
     /**
@@ -54,7 +54,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      */
     public function normalizeHost()
     {
-        return $this->stringNormalizer();
+        return $this->normalizeString();
     }
 
     /**
@@ -62,7 +62,7 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      */
     public function normalizeDbName()
     {
-        return $this->stringNormalizer();
+        return $this->normalizeString();
     }
 
     /**
@@ -70,6 +70,6 @@ class OptionsNormalizer implements OptionsNormalizerInterface
      */
     public function normalizeUser()
     {
-        return $this->stringNormalizer();
+        return $this->normalizeString();
     }
 }
