@@ -69,7 +69,7 @@ class OptionsValidator implements OptionsValidatorInterface
      */
     public function validateHost()
     {
-        $this->validateRequiredString();
+        return $this->validateRequiredString();
     }
 
     /**
