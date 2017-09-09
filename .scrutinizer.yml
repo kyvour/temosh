@@ -1,10 +1,7 @@
 build:
   environment:
     php:
-      version:
-        - 5.6
-        - 7.0
-        - 7.1
+      version: "7.1"
       ini:
         memory_limit: "-1"
 
