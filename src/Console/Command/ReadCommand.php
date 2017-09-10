@@ -7,6 +7,7 @@ use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Temosh\Console\MongoShellInterface;
+use Temosh\Sql\Exception\ParseException;
 
 /**
  * Class SelectCommand
@@ -62,7 +63,12 @@ class ReadCommand extends BaseCommand
             try {
                 $sqlQueryArray = $query->parse();
                 // Execute query.
-                $output->writeln(var_dump($sqlQueryArray));
+                $output->writeln(print_r($sqlQueryArray, true));
+            } catch (ParseException $e) {
+                $output->writeln([
+                    '<error>' . $e->getMessage() . '</error>',
+                    '<error>' . sprintf('Required form: %s', ParseException::REQUIRED_QUERY_STRUCTURE) . '</error>'
+                ]);
             } catch (\Exception $e) {
                 // Notify user about exception (invalid query, bad syntax etc.)
                 $output->writeln('<error>' . $e->getMessage() . '</error>');

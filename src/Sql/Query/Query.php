@@ -143,7 +143,7 @@ class Query implements QueryInterface
         }
 
         foreach ($parts as $part) {
-            if (!preg_match((static::QUERY_PART_REGEXP)['select'], $part)) {
+            if (!preg_match(static::QUERY_PART_REGEXP['select'], $part)) {
                 throw new ParseException(sprintf('Invalid column name %s', $part));
             }
         }
