@@ -3,10 +3,10 @@
 namespace Temosh\Mongo\Client;
 
 use MongoDB\Driver\Command;
-use MongoDB\Driver\Exception\UnexpectedValueException;
 use MongoDB\Driver\Query;
 use MongoDB\Driver\ReadPreference;
 use MongoDB\Exception\InvalidArgumentException;
+use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Mongo\Connection\Options;
