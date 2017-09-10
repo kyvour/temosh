@@ -3,13 +3,11 @@
 namespace Temosh\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Temosh\Console\MongoShellInterface;
 use Temosh\Mongo\Client\Client;
 use Temosh\Mongo\Connection\Options;
 
@@ -25,18 +23,6 @@ abstract class BaseCommand extends Command
      * @var \Temosh\Mongo\Client\Client
      */
     private $mongoClient;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct($name = null) {
-        parent::__construct($name);
-
-        // Check for the appropriate Application instance.
-        if (!($this->getApplication() instanceof MongoShellInterface)) {
-            throw new LogicException('Application instance should implement MongoShellInterface');
-        }
-    }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -60,6 +46,8 @@ abstract class BaseCommand extends Command
      */
     protected function configure()
     {
+        parent::configure();
+
         $definition = new InputDefinition([
             $this->hostOption(),
             $this->portOption(),
