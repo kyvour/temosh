@@ -41,7 +41,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
         $config = array_intersect_key(array_merge(static::DEFAULT_CONFIG, $config), static::DEFAULT_CONFIG);
 
         if (empty($config['db'])) {
-            throw new InvalidArgumentException("The configuration does not have 'db' option or argument, or it's empty");
+            throw new InvalidArgumentException("The configuration doesn't have 'db' option or argument, or it's empty");
         }
 
         /**
@@ -110,7 +110,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     }
 
     /**
-     * @return \MongoDB\Database
+     * {@inheritdoc}
      */
     public function getDatabase()
     {
