@@ -80,7 +80,7 @@ class ReadCommand extends BaseCommand
             // Try to build and execute MongoDB query.
             try {
                 $result = $client->executeSqlStatement($sqlQueryStatement);
-            } catch(MongoDbException $e) {
+            } catch (MongoDbException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
                 continue;
             }
