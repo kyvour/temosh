@@ -5,7 +5,7 @@ namespace Temosh\Mongo\Client;
 use MongoDB\Driver\Command;
 use MongoDB\Driver\Query;
 use MongoDB\Driver\ReadPreference;
-use PhpMyAdmin\SqlParser\Statement;
+use PhpMyAdmin\SqlParser\Statements\SelectStatement;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Mongo\Query\MongoQueryBuilder;
 
@@ -133,12 +133,12 @@ interface ExtendedClientInterface
     /**
      * Executes sql statement.
      *
-     * @param \PhpMyAdmin\SqlParser\Statement $statement
+     * @param \PhpMyAdmin\SqlParser\Statements\SelectStatement $statement
      *  The sql statement.
      *
      * @return string
      */
-    public function executeSqlStatement(Statement $statement);
+    public function executeSelectStatement(SelectStatement $statement);
 
     /**
      * @return \Temosh\Mongo\Query\MongoQueryBuilder

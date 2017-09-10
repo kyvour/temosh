@@ -2,13 +2,27 @@
 
 namespace Temosh\Mongo\Query;
 
-use PhpMyAdmin\SqlParser\Statement;
+use PhpMyAdmin\SqlParser\Statements\SelectStatement;
 
-class MongoQueryBuilder
+class MongoQueryBuilder implements MongoQueryBuilderInterface
 {
 
+    const OPERATORS_MAP = [
+        '='  => '$eq',
+        '<>' => '$ne',
+        '<'  => '$lt',
+        '<=' => '$lte',
+        '>'  => '$ge',
+        '>=' => '$gte',
+    ];
+
+    const LOGICAL_OPERATORS_MAP = [
+        'AND' => '$and',
+        'OR'  => '$or',
+    ];
+
     /**
-     * @var \PhpMyAdmin\SqlParser\Statement
+     * @var \PhpMyAdmin\SqlParser\Statements\SelectStatement
      *  Sql statement instance.
      */
     private $statement;
@@ -24,10 +38,19 @@ class MongoQueryBuilder
     /**
      * {@inheritdoc}
      */
-    public function setStatement(Statement $statement)
+    public function setStatement(SelectStatement $statement)
     {
         $this->statement = $statement;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     *  The collection name for query.
+     */
+    public function getCollectionName()
+    {
+        return '';
     }
 }

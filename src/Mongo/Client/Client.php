@@ -8,7 +8,7 @@ use MongoDB\Driver\ReadPreference;
 use MongoDB\Exception\InvalidArgumentException;
 use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
-use PhpMyAdmin\SqlParser\Statement;
+use PhpMyAdmin\SqlParser\Statements\SelectStatement;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Mongo\Connection\ConnectionOptions;
 use Temosh\Mongo\Query\MongoQueryBuilder;
@@ -184,7 +184,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     /**
      * {@inheritdoc}
      */
-    public function executeSqlStatement(Statement $statement)
+    public function executeSelectStatement(SelectStatement $statement)
     {
         $this->getBuilder()->setStatement($statement);
 
