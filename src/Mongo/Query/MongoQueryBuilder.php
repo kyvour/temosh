@@ -14,8 +14,7 @@ class MongoQueryBuilder
     private $statement;
 
     /**
-     * @return \PhpMyAdmin\SqlParser\Statement
-     *  Sql statement instance.
+     * {@inheritdoc}
      */
     public function getStatement()
     {
@@ -23,9 +22,7 @@ class MongoQueryBuilder
     }
 
     /**
-     * @param \PhpMyAdmin\SqlParser\Statement $statement
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setStatement(Statement $statement)
     {

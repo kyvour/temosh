@@ -141,6 +141,12 @@ interface ExtendedClientInterface
     public function executeSqlStatement(Statement $statement);
 
     /**
+     * @return \Temosh\Mongo\Query\MongoQueryBuilder
+     *  The query builder instance.
+     */
+    public function getBuilder();
+
+    /**
      * @param \Temosh\Mongo\Query\MongoQueryBuilder $queryBuilder
      *  The query builder instance.
      *

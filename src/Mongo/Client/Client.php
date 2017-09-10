@@ -32,13 +32,13 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      * @var string
      *  The name of connected database.
      */
-    private $dbName;
+    protected $dbName;
 
     /**
      * @var \Temosh\Mongo\Query\MongoQueryBuilder
      *  Query builder instance.
      */
-    private $builder;
+    protected $builder;
 
     /**
      * {@inheritdoc}
@@ -164,6 +164,15 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     }
 
     /**
+     * @return \Temosh\Mongo\Query\MongoQueryBuilder
+     *  The query builder instance.
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setQueryBuilder(MongoQueryBuilder $queryBuilder)
@@ -178,7 +187,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      */
     public function executeSqlStatement(Statement $statement)
     {
-        $this->builder->setStatement($statement);
+        $this->getBuilder()->setStatement($statement);
 
         // @todo remove dummy result.
         return print_r($statement, true);
