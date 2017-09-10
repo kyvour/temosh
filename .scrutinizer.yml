@@ -1,4 +1,8 @@
 build:
+  dependencies:
+    before:
+      - pecl channel-update pecl.php.net
+      - pecl install mongodb
   environment:
     php:
       version: "7.1"
