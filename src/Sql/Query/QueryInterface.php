@@ -37,8 +37,8 @@ interface QueryInterface
     /**
      * Parses SQL query string.
      *
-     * @return array
-     *  An array with query parts
+     * @return \PhpMyAdmin\SqlParser\Statements\SelectStatement
+     *  Parsed query statement.
      */
     public function parse();
 }

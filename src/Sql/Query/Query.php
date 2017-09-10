@@ -2,6 +2,9 @@
 
 namespace Temosh\Sql\Query;
 
+use PhpMyAdmin\SqlParser\Components\Condition;
+use PhpMyAdmin\SqlParser\Parser;
+use PhpMyAdmin\SqlParser\Utils\Query as ParserQuery;
 use Temosh\Sql\Exception\ParseException;
 use Temosh\Sql\Normalizer\NormalizerInterface;
 
@@ -11,17 +14,30 @@ use Temosh\Sql\Normalizer\NormalizerInterface;
 class Query implements QueryInterface
 {
 
-    const QUERY_PATTERN = [
-        'select' => 'select\s+(?<select>.*?)',
-        'from' => '\s+from\s+(?<from>.*?)',
-        'where' => '(\s+where\s+(?<where>.*?))?',
-        'order' => '(\s+order\s+by\s+(?<order>.*?))?',
-        'limit' => '(\s+limit\s+(?<limit>\d+?))?',
-        'offset' => '(\s+(offset|skip)\s+(?<offset>\d+?))?',
+    /**
+     * Allowed flags for \PhpMyAdmin\SqlParser\Utils\Query.
+     */
+    const ALLOWED_FLAGS = [
+        'querytype' => true,
+        'is_select' => true,
+        'select_from' => true,
+        'order' => true,
+        'limit' => true,
+        'offset' => true,
     ];
 
-    const QUERY_PART_REGEXP = [
-        'select' => '/^[(a-z0-9\-\_\.\*]+$/i',
+    const ALLOWED_CONDITION_OPERATIONS = [
+        '=',
+        '<>',
+        '>',
+        '>=',
+        '<',
+        '<=',
+    ];
+
+    const ALLOWED_CONDITION_OPERATORS = [
+        'and',
+        'or',
     ];
 
     /**
@@ -100,54 +116,71 @@ class Query implements QueryInterface
      */
     public function parse()
     {
-        // The resulting parsed array with parts of sql query.
-        $sqlQueryArray = [];
+        $query = $this->normalizer->normalizeStructure($this->getQueryString());
 
-        // Build regex for sql query.
-        $regex = '@^\s*' . implode('', static::QUERY_PATTERN) . '\s*$@';
-        $string = $this->getQueryString();
-        $groups = [];
-
-        $isMatch = @preg_match($regex, $string, $groups);
-        if (!$isMatch) {
-            // Unsupported query format.
-            throw new ParseException('Unable to parse the query.');
+        try {
+            $parser = new Parser($query, true);
+        } catch (\Exception $e) {
+            throw new ParseException('Unable to parse query string', 0, $e);
         }
 
-        // Leave only required (named) groups in regex result.
-        $groups = array_intersect_key($groups, static::QUERY_PATTERN);
-
-        // Parse select...from part.
-        $sqlQueryArray['select'] = $this->parseSelect($groups['select']);
-
-        return $sqlQueryArray;
-    }
-
-
-    /**
-     * Parses column names for select query.
-     *
-     * @param string $partsString
-     *  String with comma separated columns list.
-     *
-     * @return array
-     * @throws \Temosh\Sql\Exception\ParseException
-     */
-    protected function parseSelect($partsString)
-    {
-        $parts = explode(',', $partsString);
-        $parts = array_filter(array_map('trim', $parts));
-
-        if (empty($parts)) {
-            throw new ParseException('Unable to parse column names in the query.');
+        /** @var \PhpMyAdmin\SqlParser\Statements\SelectStatement $statement */
+        $statement = @$parser->statements[0];
+        if (!$statement) {
+            throw new ParseException('Unable to parse query string');
         }
 
-        foreach ($parts as $part) {
-            if (!preg_match(static::QUERY_PART_REGEXP['select'], $part)) {
-                throw new ParseException(sprintf('Invalid column name %s', $part));
-            }
+        // Get query flags.
+        $flags = ParserQuery::getFlags($statement);
+        $flags = array_filter($flags);
+
+        // Check if query is select query.
+        if (empty($flags['is_select'])) {
+            throw new ParseException('Parse error. String is not SELECT query');
         }
 
-        return $parts;
+        // Check if query is select...from query.
+        if (empty($flags['select_from'])) {
+            throw new ParseException('Parse error. String is not SELECT...FROM query');
+        }
+
+        // Check if query has supported structure
+        $unavailableFlags = array_diff_key($flags, static::ALLOWED_FLAGS);
+        if (count($unavailableFlags)) {
+            throw new ParseException('Parse error. Unsupported query structure');
+        }
+
+        // Check collections quantity.
+        if (count($statement->from) > 1) {
+            throw new ParseException('Parse error. Only one collection if FROM section is supported.');
+        }
+
+        if (empty($statement->where)) {
+            return $statement;
+        }
+
+        // Check 'where' part for unavailable operations or operators.
+        $unsupportedOperators = array_filter($statement->where, function (Condition $condition) {
+            $expr = strtolower($condition->expr);
+            return $condition->isOperator && !in_array($expr, static::ALLOWED_CONDITION_OPERATORS, true);
+        });
+        if (count($unsupportedOperators)) {
+            throw new ParseException('Unsupported condition operators. Only "AND" and "OR" operators are supported.');
+        }
+
+        // Get list of conditions without operators.
+        $operations = array_filter($statement->where, function (Condition $condition) {
+            return !$condition->isOperator;
+        });
+
+        // Check for brackets in conditions.
+        $bracketsOperation = array_filter($operations, function (Condition $condition) {
+            return preg_match('/[\(\[\{\)\]\}]/', $condition->expr);
+        });
+        if (count($bracketsOperation)) {
+            throw new ParseException("Brackets in conditions aren't supported");
+        }
+
+        return $statement;
     }
 }
