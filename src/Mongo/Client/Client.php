@@ -120,6 +120,24 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     /**
      * {@inheritdoc}
      */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setBuilder(MongoQueryBuilder $queryBuilder)
+    {
+        $this->builder = $queryBuilder;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getDatabase()
     {
         return $this->selectDatabase($this->getDbName());
@@ -161,25 +179,6 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
         }
 
         return true;
-    }
-
-    /**
-     * @return \Temosh\Mongo\Query\MongoQueryBuilder
-     *  The query builder instance.
-     */
-    public function getBuilder()
-    {
-        return $this->builder;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setQueryBuilder(MongoQueryBuilder $queryBuilder)
-    {
-        $this->builder = $queryBuilder;
-
-        return $this;
     }
 
     /**

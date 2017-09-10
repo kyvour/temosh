@@ -88,7 +88,7 @@ class Shell extends Application implements MongoShellInterface
     {
         if ($this->mongoClient === null || ((bool) $forceNew)) {
             $this->mongoClient = Client::fromUserInput($input);
-            $this->mongoClient->setQueryBuilder($this->mongoQueryBuilder);
+            $this->mongoClient->setBuilder($this->mongoQueryBuilder);
         }
 
         return $this->mongoClient;

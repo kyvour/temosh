@@ -152,5 +152,5 @@ interface ExtendedClientInterface
      *
      * @return mixed
      */
-    public function setQueryBuilder(MongoQueryBuilder $queryBuilder);
+    public function setBuilder(MongoQueryBuilder $queryBuilder);
 }
