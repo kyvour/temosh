@@ -62,7 +62,6 @@ class ReadCommand extends BaseCommand
             // Try to parse query string.
             try {
                 $sqlQueryStatement = $query->parse();
-
             } catch (ParseSqlException $e) {
                 $output->writeln([
                     '<error>Unexpected error occurred.</error>',
