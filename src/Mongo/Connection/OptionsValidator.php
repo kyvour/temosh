@@ -2,6 +2,8 @@
 
 namespace Temosh\Mongo\Connection;
 
+use Symfony\Component\Console\Exception\InvalidArgumentException;
+
 /**
  * Class OptionsValidator
  * Contains a set of methods for connection options validation.
@@ -17,11 +19,11 @@ class OptionsValidator implements OptionsValidatorInterface
     {
         $validator = function ($value) {
             if (!is_string($value)) {
-                throw new \InvalidArgumentException('The entered value should be a string');
+                throw new InvalidArgumentException('The entered value should be a string');
             }
 
             if (empty($value)) {
-                throw new \InvalidArgumentException('The entered value cannot be empty');
+                throw new InvalidArgumentException('The entered value cannot be empty');
             }
 
             return $value;
@@ -51,11 +53,11 @@ class OptionsValidator implements OptionsValidatorInterface
     {
         $validator = function ($value) {
             if (!is_int($value)) {
-                throw new \InvalidArgumentException('The entered value should be an integer number');
+                throw new InvalidArgumentException('The entered value should be an integer number');
             }
 
             if ($value < 1 || $value > 65345) {
-                throw new \InvalidArgumentException('The entered value should be between 0 - 65535');
+                throw new InvalidArgumentException('The entered value should be between 0 - 65535');
             }
 
             return $value;
