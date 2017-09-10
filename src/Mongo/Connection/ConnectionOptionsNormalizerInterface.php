@@ -6,7 +6,7 @@ namespace Temosh\Mongo\Connection;
 /**
  * Interface OptionsValidatorInterface
  */
-interface OptionsNormalizerInterface
+interface ConnectionOptionsNormalizerInterface
 {
 
     /**

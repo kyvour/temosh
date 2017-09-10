@@ -7,7 +7,7 @@ namespace Temosh\Mongo\Connection;
  *
  * Contains default options for connection to MongoDB.
  */
-class Options
+class ConnectionOptions
 {
 
     /**

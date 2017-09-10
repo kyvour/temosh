@@ -5,13 +5,13 @@ namespace Temosh\Sql\Query;
 use PhpMyAdmin\SqlParser\Components\Condition;
 use PhpMyAdmin\SqlParser\Parser;
 use PhpMyAdmin\SqlParser\Utils\Query as ParserQuery;
-use Temosh\Sql\Exception\ParseException;
-use Temosh\Sql\Normalizer\NormalizerInterface;
+use Temosh\Sql\Exception\ParseSqlException;
+use Temosh\Sql\Normalizer\SqlNormalizerInterface;
 
 /**
  * Class for sql query parser.
  */
-class Query implements QueryInterface
+class SqlQuery implements SqlQueryInterface
 {
 
     /**
@@ -57,7 +57,7 @@ class Query implements QueryInterface
     private $queryString = '';
 
     /**
-     * @var \Temosh\Sql\Normalizer\NormalizerInterface
+     * @var \Temosh\Sql\Normalizer\SqlNormalizerInterface
      *  Normalizer instance.
      */
     private $normalizer;
@@ -65,10 +65,10 @@ class Query implements QueryInterface
     /**
      * Parser constructor.
      *
-     * @param \Temosh\Sql\Normalizer\NormalizerInterface $normalizer
+     * @param \Temosh\Sql\Normalizer\SqlNormalizerInterface $normalizer
      *  Normalizer instance.
      */
-    public function __construct(NormalizerInterface $normalizer)
+    public function __construct(SqlNormalizerInterface $normalizer)
     {
         $this->normalizer = $normalizer;
     }
@@ -121,13 +121,13 @@ class Query implements QueryInterface
         try {
             $parser = new Parser($query, true);
         } catch (\Exception $e) {
-            throw new ParseException('Unable to parse query string', 0, $e);
+            throw new ParseSqlException('Unable to parse query string', 0, $e);
         }
 
         /** @var \PhpMyAdmin\SqlParser\Statements\SelectStatement $statement */
         $statement = @$parser->statements[0];
         if (!$statement) {
-            throw new ParseException('Unable to parse query string');
+            throw new ParseSqlException('Unable to parse query string');
         }
 
         // Get query flags.
@@ -136,23 +136,23 @@ class Query implements QueryInterface
 
         // Check if query is select query.
         if (empty($flags['is_select'])) {
-            throw new ParseException('Parse error. String is not SELECT query');
+            throw new ParseSqlException('Parse error. String is not SELECT query');
         }
 
         // Check if query is select...from query.
         if (empty($flags['select_from'])) {
-            throw new ParseException('Parse error. String is not SELECT...FROM query');
+            throw new ParseSqlException('Parse error. String is not SELECT...FROM query');
         }
 
         // Check if query has supported structure
         $unavailableFlags = array_diff_key($flags, static::ALLOWED_FLAGS);
         if (count($unavailableFlags)) {
-            throw new ParseException('Parse error. Unsupported query structure');
+            throw new ParseSqlException('Parse error. Unsupported query structure');
         }
 
         // Check collections quantity.
         if (count($statement->from) > 1) {
-            throw new ParseException('Parse error. Only one collection if FROM section is supported.');
+            throw new ParseSqlException('Parse error. Only one collection if FROM section is supported.');
         }
 
         if (empty($statement->where)) {
@@ -165,7 +165,7 @@ class Query implements QueryInterface
             return $condition->isOperator && !in_array($expr, static::ALLOWED_CONDITION_OPERATORS, true);
         });
         if (count($unsupportedOperators)) {
-            throw new ParseException('Unsupported condition operators. Only "AND" and "OR" operators are supported.');
+            throw new ParseSqlException('Unsupported condition operators. Only "AND" and "OR" operators are supported.');
         }
 
         // Get list of conditions without operators.
@@ -178,7 +178,7 @@ class Query implements QueryInterface
             return preg_match('/[\(\[\{\)\]\}]/', $condition->expr);
         });
         if (count($bracketsOperation)) {
-            throw new ParseException("Brackets in conditions aren't supported");
+            throw new ParseSqlException("Brackets in conditions aren't supported");
         }
 
         return $statement;

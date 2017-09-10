@@ -6,9 +6,9 @@ use Symfony\Component\Console\Helper\QuestionHelper as QuestionHelperBase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Temosh\Mongo\Connection\Options;
-use Temosh\Mongo\Connection\OptionsNormalizerInterface;
-use Temosh\Mongo\Connection\OptionsValidatorInterface;
+use Temosh\Mongo\Connection\ConnectionOptions;
+use Temosh\Mongo\Connection\ConnectionOptionsNormalizerInterface;
+use Temosh\Mongo\Connection\ConnectionOptionsValidatorInterface;
 
 /**
  * {@inheritdoc}
@@ -17,24 +17,24 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
 {
 
     /**
-     * @var \Temosh\Mongo\Connection\OptionsValidatorInterface
+     * @var \Temosh\Mongo\Connection\ConnectionOptionsValidatorInterface
      */
     private $optionsValidator;
 
     /**
-     * @var \Temosh\Mongo\Connection\OptionsNormalizerInterface
+     * @var \Temosh\Mongo\Connection\ConnectionOptionsNormalizerInterface
      */
     private $optionsNormalizer;
 
     /**
      * QuestionHelper constructor.
      *
-     * @param \Temosh\Mongo\Connection\OptionsNormalizerInterface $normalizer
-     * @param \Temosh\Mongo\Connection\OptionsValidatorInterface $validator
+     * @param \Temosh\Mongo\Connection\ConnectionOptionsNormalizerInterface $normalizer
+     * @param \Temosh\Mongo\Connection\ConnectionOptionsValidatorInterface $validator
      */
     public function __construct(
-        OptionsNormalizerInterface $normalizer,
-        OptionsValidatorInterface $validator
+        ConnectionOptionsNormalizerInterface $normalizer,
+        ConnectionOptionsValidatorInterface $validator
     ) {
         $this->optionsNormalizer = $normalizer;
         $this->optionsValidator = $validator;
@@ -70,9 +70,9 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
         $question = new Question(
             sprintf(
                 'Please enter the host address to connect to < %s >:',
-                Options::DEFAULT_HOST
+                ConnectionOptions::DEFAULT_HOST
             ),
-            Options::DEFAULT_HOST
+            ConnectionOptions::DEFAULT_HOST
         );
         $question
             ->setNormalizer($this->optionsNormalizer->normalizeHost())
@@ -89,9 +89,9 @@ class QuestionHelper extends QuestionHelperBase implements QuestionHelperInterfa
         $question = new Question(
             sprintf(
                 'Please enter the port to connect to < %s >:',
-                Options::DEFAULT_PORT
+                ConnectionOptions::DEFAULT_PORT
             ),
-            Options::DEFAULT_PORT
+            ConnectionOptions::DEFAULT_PORT
         );
         $question
             ->setValidator($this->optionsNormalizer->normalizePort())

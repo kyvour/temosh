@@ -6,7 +6,7 @@ namespace Temosh\Mongo\Connection;
  * Class OptionsValidator
  * Contains a set of methods for connection options validation.
  */
-class OptionsNormalizer implements OptionsNormalizerInterface
+class ConnectionOptionsNormalizer implements ConnectionOptionsNormalizerInterface
 {
 
     /**

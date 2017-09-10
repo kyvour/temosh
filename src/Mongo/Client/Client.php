@@ -10,7 +10,7 @@ use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
 use PhpMyAdmin\SqlParser\Statement;
 use Symfony\Component\Console\Input\InputInterface;
-use Temosh\Mongo\Connection\Options;
+use Temosh\Mongo\Connection\ConnectionOptions;
 use Temosh\Mongo\Query\MongoQueryBuilder;
 
 class Client extends \MongoDB\Client implements ExtendedClientInterface
@@ -20,8 +20,8 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      * An array with default config for MongoDB connection
      */
     const DEFAULT_CONFIG = [
-        'host' => Options::DEFAULT_HOST,
-        'port' => Options::DEFAULT_PORT,
+        'host' => ConnectionOptions::DEFAULT_HOST,
+        'port' => ConnectionOptions::DEFAULT_PORT,
         'user' => '',
         'pass' => '',
         'db' => '',

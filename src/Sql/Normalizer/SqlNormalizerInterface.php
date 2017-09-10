@@ -5,7 +5,7 @@ namespace Temosh\Sql\Normalizer;
 /**
  * Interface for query string normalization
  */
-interface NormalizerInterface
+interface SqlNormalizerInterface
 {
 
     /**
@@ -24,7 +24,7 @@ interface NormalizerInterface
      *  Sql query string.
      *
      * @return string
-     * @throws \Temosh\Sql\Exception\ParseException
+     * @throws \Temosh\Sql\Exception\ParseSqlException
      */
     public function normalizeStructure($string);
 }

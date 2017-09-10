@@ -7,11 +7,11 @@ use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Console\Helper\QuestionHelper;
 use Temosh\Mongo\Client\Client;
-use Temosh\Mongo\Connection\OptionsNormalizer;
-use Temosh\Mongo\Connection\OptionsValidator;
+use Temosh\Mongo\Connection\ConnectionOptionsNormalizer;
+use Temosh\Mongo\Connection\ConnectionOptionsValidator;
 use Temosh\Mongo\Query\MongoQueryBuilder;
-use Temosh\Sql\Normalizer\Normalizer;
-use Temosh\Sql\Query\Query;
+use Temosh\Sql\Normalizer\SqlNormalizer;
+use Temosh\Sql\Query\SqlQuery;
 
 /**
  * Class Shell. Main application class for Temosh CLI.
@@ -24,8 +24,8 @@ class Shell extends Application implements MongoShellInterface
     const NAME = 'Temosh';
 
     /**
-     * @var \Temosh\Sql\Query\QueryInterface
-     *  Sql string parser instance.
+     * @var \Temosh\Sql\Query\SqlQueryInterface
+     *  Instance of SqlQuery representation.
      */
     private $sqlQuery;
 
@@ -49,15 +49,12 @@ class Shell extends Application implements MongoShellInterface
         parent::__construct(self::NAME, self::VERSION);
 
         // Add required helper instance for application.
-        $helper = new QuestionHelper(
-            new OptionsNormalizer(),
-            new OptionsValidator()
-        );
+        $helper = new QuestionHelper(new ConnectionOptionsNormalizer(), new ConnectionOptionsValidator());
         $this->setHelper($helper);
 
         // This app doesn't have service container, so just create required objects here.
-        $normalizer = new Normalizer();
-        $this->sqlQuery = new Query($normalizer);
+        $normalizer = new SqlNormalizer();
+        $this->sqlQuery = new SqlQuery($normalizer);
         $this->mongoQueryBuilder = new MongoQueryBuilder();
     }
 
@@ -91,8 +88,9 @@ class Shell extends Application implements MongoShellInterface
     {
         if ($this->mongoClient === null || ((bool) $forceNew)) {
             $this->mongoClient = Client::fromUserInput($input);
+            $this->mongoClient->setQueryBuilder($this->mongoQueryBuilder);
         }
 
-        return $this->mongoClient->setQueryBuilder($this->mongoQueryBuilder);
+        return $this->mongoClient;
     }
 }

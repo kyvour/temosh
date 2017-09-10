@@ -8,7 +8,7 @@ use Symfony\Component\Console\Exception\InvalidArgumentException;
  * Class OptionsValidator
  * Contains a set of methods for connection options validation.
  */
-class OptionsValidator implements OptionsValidatorInterface
+class ConnectionOptionsValidator implements ConnectionOptionsValidatorInterface
 {
 
     /**

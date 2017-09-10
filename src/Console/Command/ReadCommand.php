@@ -2,12 +2,12 @@
 
 namespace Temosh\Console\Command;
 
-use MongoDB\Driver\Exception\Exception;
+use MongoDB\Driver\Exception\Exception as MongoDbException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Temosh\Console\MongoShellInterface;
-use Temosh\Sql\Exception\ParseException;
+use Temosh\Sql\Exception\ParseSqlException;
 
 /**
  * Class SelectCommand
@@ -33,9 +33,9 @@ class ReadCommand extends BaseCommand
 
         // Check connection to the MongoDB database.
         try {
-            $client = $this->getMongoClientFromInput($input);
+            $client = $app->getMongoClientFromInput($input);
             $client->checkConnection();
-        } catch (Exception $e) {
+        } catch (MongoDbException $e) {
             $output->writeln([
                 '<error>Connection to the database failed.</error>',
                 '<error>' . $e->getMessage() . '</error>',
@@ -54,24 +54,35 @@ class ReadCommand extends BaseCommand
             if ($query->isEmpty()) {
                 continue;
             }
-
             // Exit on "exit" query.
             if ($query->isExitCommand()) {
                 return;
             }
 
+            // Try to parse query string.
             try {
-                $sqlQueryArray = $query->parse();
-                // Execute query.
-                $output->writeln(print_r($sqlQueryArray, true));
-            } catch (ParseException $e) {
+                $sqlQueryStatement = $query->parse();
+
+            } catch (ParseSqlException $e) {
+                $output->writeln([
+                    '<error>Unexpected error occurred.</error>',
+                    '<error>' . $e->getMessage() . '</error>',
+                ]);
+                continue;
+            } catch (\Exception $e) {
                 $output->writeln([
                     '<error>' . $e->getMessage() . '</error>',
-                    '<error>' . sprintf('Required form: %s', ParseException::REQUIRED_QUERY_STRUCTURE) . '</error>'
+                    '<error>' . sprintf('Required form: %s', ParseSqlException::REQUIRED_QUERY_STRUCTURE) . '</error>',
                 ]);
-            } catch (\Exception $e) {
-                // Notify user about exception (invalid query, bad syntax etc.)
+                continue;
+            }
+
+            // Try to build and execute MongoDB query.
+            try {
+                $result = $client->executeSqlStatement($sqlQueryStatement);
+            } catch(MongoDbException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
+                continue;
             }
         } while (true);
     }

@@ -5,7 +5,7 @@ namespace Temosh\Sql\Exception;
 /**
  * Exception for sql query parsing.
  */
-class ParseException extends QueryException
+class ParseSqlException extends SqlQueryException
 {
 
     const REQUIRED_QUERY_STRUCTURE = <<<query

@@ -18,7 +18,7 @@ interface MongoShellInterface
     public function setHelper(HelperInterface $helper);
 
     /**
-     * @return \Temosh\Sql\Query\QueryInterface
+     * @return \Temosh\Sql\Query\SqlQueryInterface
      *  Instance of SQL query parser.
      */
     public function getSqlQuery();

@@ -2,12 +2,12 @@
 
 namespace Temosh\Sql\Normalizer;
 
-use Temosh\Sql\Exception\ParseException;
+use Temosh\Sql\Exception\ParseSqlException;
 
 /**
  * Normalizer class for SQL query.
  */
-class Normalizer implements NormalizerInterface
+class SqlNormalizer implements SqlNormalizerInterface
 {
 
     /**
@@ -58,7 +58,7 @@ class Normalizer implements NormalizerInterface
      *  Sql query string.
      *
      * @return string
-     * @throws \Temosh\Sql\Exception\ParseException
+     * @throws \Temosh\Sql\Exception\ParseSqlException
      */
     public function normalizeStructure($string)
     {
@@ -69,7 +69,7 @@ class Normalizer implements NormalizerInterface
         $isMatch = @preg_match($regex, $string, $groups);
         if (!$isMatch) {
             // Unsupported query format.
-            throw new ParseException('Illegal query structure.');
+            throw new ParseSqlException('Illegal query structure.');
         }
 
         // Leave only required (named) groups in regex result.
@@ -77,37 +77,37 @@ class Normalizer implements NormalizerInterface
 
         // Check if 'from' section exists.
         if (!isset($groups['select']) || trim($groups['select']) === '') {
-            throw new ParseException('Illegal query structure: "select" section does not exist or empty.');
+            throw new ParseSqlException('Illegal query structure: "select" section does not exist or empty.');
         }
 
         // Check if 'from' section exists.
         if (!isset($groups['from']) || trim($groups['from']) === '') {
-            throw new ParseException('Illegal query structure: "from" section does not exist or empty.');
+            throw new ParseSqlException('Illegal query structure: "from" section does not exist or empty.');
         }
 
         // Check where section.
         if (isset($groups['where']) && trim($groups['where']) === '') {
-            throw new ParseException('Illegal query structure: "where" section is empty.');
+            throw new ParseSqlException('Illegal query structure: "where" section is empty.');
         }
 
         // Check order by section.
         if (isset($groups['order']) && trim($groups['order']) === '') {
-            throw new ParseException('Illegal query structure: "order by" section is empty.');
+            throw new ParseSqlException('Illegal query structure: "order by" section is empty.');
         }
 
         // Check limit section.
         if (isset($groups['limit']) && trim($groups['limit']) === '') {
-            throw new ParseException('Illegal query structure: "limit" section is empty.');
+            throw new ParseSqlException('Illegal query structure: "limit" section is empty.');
         }
 
         // Check offset section.
         if (isset($groups['offset']) && trim($groups['offset']) === '') {
-            throw new ParseException('Illegal query structure: "offset" section is empty.');
+            throw new ParseSqlException('Illegal query structure: "offset" section is empty.');
         }
 
         // Check if 'offset' section exists together with 'limit'.
         if (!isset($groups['limit']) && isset($groups['offset'])) {
-            throw new ParseException('Illegal query structure: "offset" can be used only with "limit" statement.');
+            throw new ParseSqlException('Illegal query structure: "offset" can be used only with "limit" statement.');
         }
 
         // Join back query parts.

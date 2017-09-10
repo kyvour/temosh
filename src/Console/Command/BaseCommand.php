@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Temosh\Mongo\Connection\Options;
+use Temosh\Mongo\Connection\ConnectionOptions;
 
 /**
  * Class SelectCommand
@@ -65,7 +65,7 @@ abstract class BaseCommand extends Command
             'H',
             InputOption::VALUE_OPTIONAL,
             'server to connect to',
-            Options::DEFAULT_HOST
+            ConnectionOptions::DEFAULT_HOST
         );
     }
 
@@ -81,7 +81,7 @@ abstract class BaseCommand extends Command
             'P',
             InputOption::VALUE_OPTIONAL,
             'port to connect to',
-            Options::DEFAULT_PORT
+            ConnectionOptions::DEFAULT_PORT
         );
     }
 

@@ -5,7 +5,7 @@ namespace Temosh\Sql\Query;
 /**
  * Interface for sql query parsers.
  */
-interface QueryInterface
+interface SqlQueryInterface
 {
 
     /**
