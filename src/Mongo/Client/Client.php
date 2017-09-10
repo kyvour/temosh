@@ -8,8 +8,10 @@ use MongoDB\Driver\ReadPreference;
 use MongoDB\Exception\InvalidArgumentException;
 use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
+use PhpMyAdmin\SqlParser\Statement;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Mongo\Connection\Options;
+use Temosh\Mongo\Query\MongoQueryBuilder;
 
 class Client extends \MongoDB\Client implements ExtendedClientInterface
 {
@@ -31,6 +33,12 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      *  The name of connected database.
      */
     private $dbName;
+
+    /**
+     * @var \Temosh\Mongo\Query\MongoQueryBuilder
+     *  Query builder instance.
+     */
+    private $builder;
 
     /**
      * {@inheritdoc}
@@ -153,5 +161,26 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
         }
 
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setQueryBuilder(MongoQueryBuilder $queryBuilder)
+    {
+        $this->builder = $queryBuilder;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function executeSqlStatement(Statement $statement)
+    {
+        $this->builder->setStatement($statement);
+
+        // @todo remove dummy result.
+        return print_r($statement, true);
     }
 }

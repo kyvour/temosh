@@ -5,7 +5,9 @@ namespace Temosh\Mongo\Client;
 use MongoDB\Driver\Command;
 use MongoDB\Driver\Query;
 use MongoDB\Driver\ReadPreference;
+use PhpMyAdmin\SqlParser\Statement;
 use Symfony\Component\Console\Input\InputInterface;
+use Temosh\Mongo\Query\MongoQueryBuilder;
 
 interface ExtendedClientInterface
 {
@@ -127,4 +129,22 @@ interface ExtendedClientInterface
      *  True if connection to the MongoDb is established.
      */
     public function checkConnection();
+
+    /**
+     * Executes sql statement.
+     *
+     * @param \PhpMyAdmin\SqlParser\Statement $statement
+     *  The sql statement.
+     *
+     * @return string
+     */
+    public function executeSqlStatement(Statement $statement);
+
+    /**
+     * @param \Temosh\Mongo\Query\MongoQueryBuilder $queryBuilder
+     *  The query builder instance.
+     *
+     * @return mixed
+     */
+    public function setQueryBuilder(MongoQueryBuilder $queryBuilder);
 }
