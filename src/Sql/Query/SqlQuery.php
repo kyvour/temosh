@@ -162,6 +162,7 @@ class SqlQuery implements SqlQueryInterface
         // Check 'where' part for unavailable operations or operators.
         $unsupportedOperators = array_filter($statement->where, function (Condition $condition) {
             $expr = strtolower($condition->expr);
+
             return $condition->isOperator && !in_array($expr, static::ALLOWED_CONDITION_OPERATORS, true);
         });
         if (count($unsupportedOperators)) {
@@ -179,6 +180,14 @@ class SqlQuery implements SqlQueryInterface
         });
         if (count($bracketsOperation)) {
             throw new ParseSqlException("Brackets in conditions aren't supported");
+        }
+
+        // Check for unsupported operations.
+        $unsupportedOperations = array_filter($operations, function (Condition $condition) {
+            return !preg_match('/(' . implode('|', static::ALLOWED_CONDITION_OPERATIONS) . ')/', $condition->expr);
+        });
+        if (count($unsupportedOperations)) {
+            throw new ParseSqlException('Unsupported operations in conditions. Only =, <>, >, >=, <, <= are allowed');
         }
 
         return $statement;
