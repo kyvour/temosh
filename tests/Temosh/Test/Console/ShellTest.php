@@ -5,8 +5,6 @@ namespace Temosh\Test\Console;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputDefinition;
-use Temosh\Console\Helper\QuestionHelper;
 use Temosh\Console\MongoShellInterface;
 use Temosh\Console\Shell;
 use Temosh\Mongo\Client\Client;
@@ -34,12 +32,14 @@ class ShellTest extends \PHPUnit_Framework_TestCase
         $this->shell = null;
     }
 
-    public function testShell() {
+    public function testShell()
+    {
         $this->assertInstanceOf(MongoShellInterface::class, $this->shell);
         $this->assertInstanceOf(Application::class, $this->shell);
     }
 
-    public function testGetSqlQuery() {
+    public function testGetSqlQuery()
+    {
         $this->assertInstanceOf(SqlQuery::class, $this->shell->getSqlQuery());
     }
 
