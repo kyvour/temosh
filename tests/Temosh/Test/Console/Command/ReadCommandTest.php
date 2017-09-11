@@ -1,6 +1,6 @@
 <?php
 
-namespace Temosh\Test;
+namespace Temosh\Test\Console\Command;
 
 use Temosh\Console\Command\ReadCommand;
 
@@ -8,7 +8,7 @@ use Temosh\Console\Command\ReadCommand;
  * @coversDefaultClass \Temosh\Console\Command\SelectCommand
  * @group Temosh
  */
-class SelectCommandTest extends \PHPUnit_Framework_TestCase
+class ReadCommandTest extends \PHPUnit_Framework_TestCase
 {
 
     private $command;
@@ -83,7 +83,7 @@ class SelectCommandTest extends \PHPUnit_Framework_TestCase
      * @param $optionName
      *  The option name.
      */
-    public function testSelectCommand($optionName)
+    public function testRequiredOptions($optionName)
     {
         $definition = $this->command->getDefinition();
         $this->assertTrue($definition->hasOption($optionName));
