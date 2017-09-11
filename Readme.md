@@ -60,11 +60,14 @@ After connection to the database, the query will be asked.
 
 `SELECT <Projections> FROM <Target> [WHERE <Condition>*] [ORDER BY <Field> [ASC|DESC] [,*]] [LIMIT <MaxRecords>] [[SKIP|OFFSET] <SkipRecords>]`
 
-Example sql queries:
+Example sql queries for the `restaurants` collection:
+- `select borough, cuisine, address.zipcode, grades.score from restaurants where borough = Bronx and _id < 41396647 or cuisine = Chicken order by borough, address.zipcode asc limit 10`
+- `select borough, address.zipcode, grades.score from restaurants where borough = Queens order by _id asc, address.bulding desc, address.zipcode asc limit 5 offset 4`
 - `select borough, address.zipcode, grades.score FROM restaurants order by _id asc, address.bulding desc, address.zipcode asc limit 5 offset 4`
 - `select borough, address.zipcode, grades.score FROM restaurants limit 5`
 - `select borough, address.zipcode, grades.score FROM restaurants order by _id asc, address.bulding desc limit 2`
 
+**You can enter `exit`, `quit`, `die` or `q` instead of SQL query to quit from the program.**
+
 # 6. Limitations:
-- Conditions are not implemented yet (WIP).
 - Output is not so good for big nested json objects.
