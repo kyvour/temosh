@@ -41,8 +41,6 @@ class SqlNormalizer implements SqlNormalizerInterface
     {
         // Cast to string.
         $queryString = (string) $queryString;
-        // convert string to lowercase.
-        $queryString = strtolower($queryString);
         // Trim whitespaces.
         $queryString = trim($queryString);
         // Trim trailing semicolons.

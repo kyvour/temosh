@@ -15,7 +15,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
         '<=' => '$lte',
         '=' => '$eq',
         '<' => '$lt',
-        '>' => '$ge',
+        '>' => '$gt',
     ];
 
     const OPERATORS_MAP_REVERSED = [
@@ -24,7 +24,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
         '$lte' => '<=',
         '$eq' => '=',
         '$lt' => '<',
-        '$ge' => '>',
+        '$gt' => '>',
     ];
 
     const SORTING_MAP = [
@@ -129,7 +129,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
             }
 
             // Just increase group number if there is OR operator.
-            if($condition->expr === 'OR') {
+            if ($condition->expr === 'OR') {
                 $orNumber++;
                 continue;
             }
@@ -145,12 +145,14 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
 
         // One group means that WHERE part doesn't have OR conditions.
         if (count($groups) === 1) {
-            return reset($groups);
+            $filter['$and'] = reset($groups);
+
+            return $filter;
         }
 
         $filter = ['$or' => []];
         foreach ($groups as $group) {
-            $filter['$or'][] = count($group) > 1 ? ['$and' => $group] : reset($group);
+            $filter['$or'][] = ['$and' => $group];
         }
 
         return $filter;
@@ -171,6 +173,11 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
 
             if (count($parts) === 2) {
                 list($key, $value) = array_map('trim', $parts);
+
+                // Convert numeric string to number.
+                if (is_numeric($value)) {
+                    $value += 0;
+                }
 
                 return [$key => [$opm => $value]];
             }
