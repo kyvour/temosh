@@ -2,14 +2,18 @@
 
 namespace Temosh\Mongo\Client;
 
-use MongoDB\Driver\Command;
-use MongoDB\Driver\Query;
-use MongoDB\Driver\ReadPreference;
+use MongoDB\Driver\Cursor;
 use MongoDB\Exception\InvalidArgumentException;
 use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
 use PhpMyAdmin\SqlParser\Statements\SelectStatement;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Temosh\Mongo\Connection\ConnectionOptions;
 use Temosh\Mongo\Query\MongoQueryBuilder;
 
@@ -146,27 +150,9 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     /**
      * {@inheritdoc}
      */
-    public function executeQuery($collectionName, Query $query, ReadPreference $readPreference = null)
+    public function getCollection($collectionName, array $options = [])
     {
-        $namespace = $this->getDatabase()->selectCollection($collectionName)->getNamespace();
-
-        return $this->getManager()->executeQuery($namespace, $query, $readPreference);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function executeCommand(Command $command, ReadPreference $readPreference = null)
-    {
-        return $this->getManager()->executeCommand($this->getDbName(), $command, $readPreference);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function executeDatabaseCommand($command, array $options = [])
-    {
-        return $this->getDatabase()->command($command, $options);
+        return $this->selectCollection($this->getDbName(), $collectionName, $options);
     }
 
     /**
@@ -186,9 +172,70 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      */
     public function executeSelectStatement(SelectStatement $statement)
     {
-        $this->getBuilder()->setStatement($statement);
+        $builder = $this->getBuilder()->setStatement($statement);
 
-        // @todo remove dummy result.
-        return print_r($statement, true);
+        $collectionName = $builder->getCollectionName();
+        $fields = $builder->getFields();
+        $filter = $builder->getConditions();
+        $sort = $builder->getSort();
+        $limit = $builder->getLimit();
+        $skip = $builder->getSkip();
+
+        $searchOptions = [
+            'projection' => $fields,
+        ];
+        if ($sort !== null) {
+            $searchOptions['sort'] = $sort;
+        }
+        if ($limit !== null) {
+            $searchOptions['limit'] = $limit;
+        }
+        if ($skip !== null) {
+            $searchOptions['skip'] = $skip;
+        }
+
+        $cursor = $this->getCollection($collectionName)->find([], $searchOptions);
+        $result = $this->normalizeCursor($cursor);
+
+        return $this->getTableOutput($result);
+    }
+
+    /**
+     * @param \MongoDB\Driver\Cursor $cursor
+     *  Converts cursor object to the results array.
+     *
+     * @return array
+     */
+    protected function normalizeCursor(Cursor $cursor) {
+        $encoder = new JsonEncoder();
+        $cursorIterator = new \IteratorIterator($cursor);
+        $cursorIterator->rewind();
+
+        $result = [];
+        while ($document = $cursorIterator->current()) {
+            $result[] = $encoder->decode($encoder->encode($document, $encoder::FORMAT), $encoder::FORMAT);
+            $cursorIterator->next();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *  Array with data.
+     *
+     * @return array
+     *  Array with json serialized values.
+     */
+    protected function getTableOutput(array $data)
+    {
+        $encoder = new JsonEncoder();
+        foreach ($data as $key => $value) {
+             foreach ($value as $key2 => $value2) {
+                 $data[$key][$key2] = is_scalar($value2) ? $value2 : $encoder->encode($value2, $encoder::FORMAT);
+             }
+        }
+
+        return $data;
     }
 }
