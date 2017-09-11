@@ -145,7 +145,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
 
         // One group means that WHERE part doesn't have OR conditions.
         if (count($groups) === 1) {
-            $filter['$and'] = reset($groups);
+            $filter = ['$and' => reset($groups)];
 
             return $filter;
         }
@@ -164,7 +164,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
      * @param $expr
      *  String sql expression.
      *
-     * @return array
+     * @return array<*,array>
      */
     protected function convertConditionOperation($expr)
     {
