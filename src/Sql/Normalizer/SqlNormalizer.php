@@ -74,6 +74,7 @@ class SqlNormalizer implements SqlNormalizerInterface
 
         // Leave only required (named) groups in regex result.
         $groups = array_intersect_key($groups, static::QUERY_STRUCTURE_PATTERN);
+        $groups = array_filter(array_map('trim', $groups));
 
         // Check if 'from' section exists.
         if (!isset($groups['select']) || trim($groups['select']) === '') {
@@ -83,26 +84,6 @@ class SqlNormalizer implements SqlNormalizerInterface
         // Check if 'from' section exists.
         if (!isset($groups['from']) || trim($groups['from']) === '') {
             throw new ParseSqlException('Illegal query structure: "from" section does not exist or empty.');
-        }
-
-        // Check where section.
-        if (isset($groups['where']) && trim($groups['where']) === '') {
-            throw new ParseSqlException('Illegal query structure: "where" section is empty.');
-        }
-
-        // Check order by section.
-        if (isset($groups['order']) && trim($groups['order']) === '') {
-            throw new ParseSqlException('Illegal query structure: "order by" section is empty.');
-        }
-
-        // Check limit section.
-        if (isset($groups['limit']) && trim($groups['limit']) === '') {
-            throw new ParseSqlException('Illegal query structure: "limit" section is empty.');
-        }
-
-        // Check offset section.
-        if (isset($groups['offset']) && trim($groups['offset']) === '') {
-            throw new ParseSqlException('Illegal query structure: "offset" section is empty.');
         }
 
         // Check if 'offset' section exists together with 'limit'.
