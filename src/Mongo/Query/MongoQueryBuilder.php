@@ -108,7 +108,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     public function getConditions()
     {
         $conditions = $this->getStatement()->where;
-        if (!$conditions) {
+        if (empty($conditions)) {
             return [];
         }
 
@@ -192,7 +192,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     public function getSort()
     {
         $order = $this->getStatement()->order;
-        if (!$order) {
+        if (empty($order)) {
             return null;
         }
 
