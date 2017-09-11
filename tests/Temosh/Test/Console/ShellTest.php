@@ -2,6 +2,7 @@
 
 namespace Temosh\Test\Console;
 
+use MongoDB\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -60,7 +61,7 @@ class ShellTest extends \PHPUnit_Framework_TestCase
     public function testGetMongoClientFromWrongInput()
     {
         $input = new ArgvInput();
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->assertInstanceOf(Client::class, $this->shell->getMongoClientFromInput($input));
     }
 }
