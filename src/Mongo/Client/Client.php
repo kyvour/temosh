@@ -189,7 +189,7 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
             $searchOptions['skip'] = $skip;
         }
 
-        $cursor = $this->getCollection($collectionName)->find([], $searchOptions);
+        $cursor = $this->getCollection($collectionName)->find($filter, $searchOptions);
         $result = $this->normalizeCursor($cursor);
 
         return $this->getTableOutput($result);

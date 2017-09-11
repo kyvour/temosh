@@ -10,17 +10,21 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
 {
 
     const OPERATORS_MAP = [
-        '='  => '$eq',
         '<>' => '$ne',
-        '<'  => '$lt',
-        '<=' => '$lte',
-        '>'  => '$ge',
         '>=' => '$gte',
+        '<=' => '$lte',
+        '=' => '$eq',
+        '<' => '$lt',
+        '>' => '$ge',
     ];
 
-    const LOGICAL_OPERATORS_MAP = [
-        'AND' => '$and',
-        'OR'  => '$or',
+    const OPERATORS_MAP_REVERSED = [
+        '$ne' => '<>',
+        '$gte' => '>=',
+        '$lte' => '<=',
+        '$eq' => '=',
+        '$lt' => '<',
+        '$ge' => '>',
     ];
 
     const SORTING_MAP = [
@@ -68,7 +72,7 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
             throw new MongoQueryBuildException('Unable retrieve collection name from SQL statement.');
         }
 
-        return  $collectionName;
+        return $collectionName;
     }
 
     /**
@@ -108,9 +112,76 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
             return [];
         }
 
-        return [];
+        // Break all conditions to OR groups.
+        $groups = [];
+        $orNumber = 0;
+
+        foreach ($conditions as $condition) {
+            // Convert expression to MongoDB array and add to current group.
+            if (!$condition->isOperator) {
+                $groups[$orNumber][] = $this->convertConditionOperation($condition->expr);
+                continue;
+            }
+
+            // Do nothing if there is just AND operator.
+            if ($condition->expr === 'AND') {
+                continue;
+            }
+
+            // Just increase group number if there is OR operator.
+            if($condition->expr === 'OR') {
+                $orNumber++;
+                continue;
+            }
+
+            // Throw exception when there isn't field condition and OR or AND operator.
+            throw new MongoQueryBuildException(sprintf('Unsupported logical operator %s', $condition->expr));
+        }
+
+        // Throw exception if there was only operators without field conditions.
+        if (empty($groups)) {
+            throw new MongoQueryBuildException('Unable to build WHERE statement.');
+        }
+
+        // One group means that WHERE part doesn't have OR conditions.
+        if (count($groups) === 1) {
+            return reset($groups);
+        }
+
+        $filter = ['$or' => []];
+        foreach ($groups as $group) {
+            $filter['$or'][] = count($group) > 1 ? ['$and' => $group] : reset($group);
+        }
+
+        return $filter;
     }
 
+    /**
+     * Converts sql expression to MongoDB driver format.
+     *
+     * @param $expr
+     *  String sql expression.
+     *
+     * @return array
+     */
+    protected function convertConditionOperation($expr)
+    {
+        foreach (static::OPERATORS_MAP as $op => $opm) {
+            $parts = explode($op, $expr);
+
+            if (count($parts) === 2) {
+                list($key, $value) = array_map('trim', $parts);
+
+                return [$key => [$opm => $value]];
+            }
+        }
+
+        throw new MongoQueryBuildException(sprintf('Unable to build filter from expression %s', $expr));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSort()
     {
         $order = $this->getStatement()->order;
