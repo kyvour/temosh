@@ -166,7 +166,7 @@ class SqlQuery implements SqlQueryInterface
             return $condition->isOperator && !in_array($expr, static::ALLOWED_CONDITION_OPERATORS, true);
         });
         if (count($unsupportedOperators)) {
-            throw new ParseSqlException('Unsupported condition operators. Only "AND" and "OR" operators are supported.');
+            throw new ParseSqlException('Unsupported condition operator. Only "AND" and "OR" operators are supported.');
         }
 
         // Get list of conditions without operators.
