@@ -83,7 +83,7 @@ interface ExtendedClientInterface
      * @param \PhpMyAdmin\SqlParser\Statements\SelectStatement $statement
      *  The sql statement.
      *
-     * @return array<*, array>
+     * @return array<*,array>
      */
     public function executeSelectStatement(SelectStatement $statement);
 
