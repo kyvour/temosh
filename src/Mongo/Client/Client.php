@@ -7,13 +7,8 @@ use MongoDB\Exception\InvalidArgumentException;
 use MongoDB\Exception\UnexpectedValueException;
 use MongoDB\Model\CollectionInfoIterator;
 use PhpMyAdmin\SqlParser\Statements\SelectStatement;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Temosh\Mongo\Connection\ConnectionOptions;
 use Temosh\Mongo\Query\MongoQueryBuilder;
 
@@ -206,7 +201,8 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
      *
      * @return array
      */
-    protected function normalizeCursor(Cursor $cursor) {
+    protected function normalizeCursor(Cursor $cursor)
+    {
         $encoder = new JsonEncoder();
         $cursorIterator = new \IteratorIterator($cursor);
         $cursorIterator->rewind();
@@ -231,9 +227,9 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
     {
         $encoder = new JsonEncoder();
         foreach ($data as $key => $value) {
-             foreach ($value as $key2 => $value2) {
-                 $data[$key][$key2] = is_scalar($value2) ? $value2 : $encoder->encode($value2, $encoder::FORMAT);
-             }
+            foreach ($value as $key2 => $value2) {
+                $data[$key][$key2] = is_scalar($value2) ? $value2 : $encoder->encode($value2, $encoder::FORMAT);
+            }
         }
 
         return $data;

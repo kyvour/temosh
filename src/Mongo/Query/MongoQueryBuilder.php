@@ -74,7 +74,8 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getFields() {
+    public function getFields()
+    {
         $fieldsArray = $this->getStatement()->expr;
         if (empty($fieldsArray)) {
             throw new MongoQueryBuildException('Unable retrieve fields from SQL statement.');
@@ -100,7 +101,8 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getConditions() {
+    public function getConditions()
+    {
         $conditions = $this->getStatement()->where;
         if (!$conditions) {
             return [];
@@ -142,7 +144,8 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getSkip() {
+    public function getSkip()
+    {
         $limitObject = $this->getStatement()->limit;
         if (!$limitObject) {
             return null;

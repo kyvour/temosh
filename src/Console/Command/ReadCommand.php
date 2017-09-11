@@ -98,11 +98,11 @@ class ReadCommand extends BaseCommand
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array $result
      */
-    protected function printResults(OutputInterface $output, array $result) {
+    protected function printResults(OutputInterface $output, array $result)
+    {
         if (empty($result)) {
             $output->writeln('<comment>There are no result matches your query.</comment>');
-        }
-        else {
+        } else {
             $table = new Table($output);
             $headers = array_keys($result[0]);
             $table->setHeaders($headers)->setRows($result)->render();
