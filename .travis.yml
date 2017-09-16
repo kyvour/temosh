@@ -5,8 +5,6 @@ os:
   - linux
 
 php:
-  - 5.6
-  - 7.0
   - 7.1
 
 services:
