@@ -75,5 +75,3 @@ tools:
 
 checks:
   php: true
-
-coding_style: true
