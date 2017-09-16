@@ -1,5 +1,7 @@
 build:
   environment:
+    postgresql: false
+    redis: false
     mongodb: true
     php:
       version: "7.1"
@@ -34,12 +36,6 @@ tools:
         - 'src/*'
         - 'boot/*'
         - 'tests/*'
-  # Copy/Paste Detector
-  php_cpd:
-    enabled: true
-    excluded_dirs:
-      - tests
-      - vendor
   # PHP Mess Detector (http://phpmd.org).
   php_mess_detector:
     enabled: true
