@@ -26,17 +26,21 @@ tools:
     enabled: true
     config:
       standard: PSR2
-    excluded_dirs:
-      - tests
-      - vendor
+    extensions:
+      - php
+    filter:
+      excluded_paths:
+        - vendor
+
   # PHP CS Fixer.
   php_cs_fixer:
     enabled: true
     config:
       level: all
-    excluded_dirs:
-      - tests
-      - vendor
+    filter:
+      excluded_paths:
+        - vendor
+
   # PHP Mess Detector (http://phpmd.org).
   php_mess_detector:
     enabled: true
@@ -47,6 +51,7 @@ tools:
       - vendor
     config:
       ruleset: 'phpmd.xml.dist'
+
   # Copy/Paste Detector
   php_cpd:
     enabled: true
