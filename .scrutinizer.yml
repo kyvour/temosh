@@ -14,14 +14,11 @@ build:
           override:
             -
               command: phpcs-run
-  tests:
-    override:
-      -
-        command: 'vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover'
-        coverage:
-          file: 'coverage.clover'
-          format: 'clover'
-
+            -
+              command: 'vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover'
+              coverage:
+                file: 'coverage.clover'
+                format: 'clover'
 tools:
   # Code Sniffer
   php_code_sniffer:
