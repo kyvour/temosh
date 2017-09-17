@@ -7,13 +7,7 @@ build:
       version: "7.1"
       ini:
         memory_limit: "-1"
-  nodes:
-    tests: true
-    analysis:
-      tests:
-        override:
-          -
-            command: phpcs-run
+
   tests:
     override:
       -
