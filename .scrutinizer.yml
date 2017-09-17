@@ -8,18 +8,19 @@ build:
       ini:
         memory_limit: "-1"
   nodes:
-    tests:
-      override:
-        -
-          command: 'vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover'
-          coverage:
-            file: 'coverage.clover'
-            format: 'clover'
+    tests: true
     analysis:
       tests:
         override:
           -
             command: phpcs-run
+  tests:
+    override:
+      -
+        command: 'vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover'
+        coverage:
+          file: 'coverage.clover'
+          format: 'clover'
 tools:
   # Code Sniffer
   php_code_sniffer:
@@ -64,7 +65,6 @@ tools:
   # Code Coverage
   php_code_coverage: true
   # Runs Scrutinizer's PHP Analyzer Tool
-  # https://scrutinizer-ci.com/docs/tools/php/php-analyzer/config_reference
   php_analyzer: true
   # PHP Code Similarity Analyzer
   php_sim: true
