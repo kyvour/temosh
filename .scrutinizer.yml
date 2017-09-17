@@ -20,8 +20,11 @@ build:
 
 tools:
   # Code Coverage
+  # vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
   php_code_coverage: true
+
   # Code Sniffer
+  # vendor/bin/phpcs --standard=psr2 --extensions=php --ignore=*/vendor/* ./
   php_code_sniffer:
     enabled: true
     config:
@@ -33,15 +36,19 @@ tools:
         - vendor
 
   # PHP CS Fixer.
+  # vendor/bin/phpcbf --standard=psr2 --extensions=php --ignore=*/vendor/* ./
   php_cs_fixer:
     enabled: true
     config:
       level: all
+    extensions:
+      - php
     filter:
       excluded_paths:
         - vendor
 
   # PHP Mess Detector (http://phpmd.org).
+  # vendor/bin/phpmd ./ text phpmd.xml.dist --exclude */vendor/* --suffixes php
   php_mess_detector:
     enabled: true
     config:
@@ -50,7 +57,6 @@ tools:
       - php
     filter:
       excluded_paths:
-        - tests
         - vendor
 
   # Copy/Paste Detector
@@ -71,8 +77,7 @@ tools:
     excluded_dirs:
       - tests
       - vendor
-  # Code Coverage
-  php_code_coverage: true
+
   # Runs Scrutinizer's PHP Analyzer Tool
   php_analyzer: true
   # PHP Code Similarity Analyzer
