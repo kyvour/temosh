@@ -1,4 +1,8 @@
 build:
+  dependencies:
+    before:
+      - pecl channel-update pecl.php.net
+      - pecl install mongodb
   environment:
     postgresql: false
     redis: false
@@ -8,56 +12,28 @@ build:
       ini:
         memory_limit: "-1"
 
-  tests:
-    override:
-      -
-        command: 'vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover'
-        coverage:
-          file: 'coverage.clover'
-          format: 'clover'
 tools:
+  # Code Coverage
+  php_code_coverage: true
+  external_code_coverage:
+    timeout: 600
+    runs: 3
   # Code Sniffer
   php_code_sniffer:
     enabled: true
     config:
       standard: PSR2
-    filter:
-      paths:
-        - 'src/*'
-        - 'boot/*'
-        - 'tests/*'
   # PHP CS Fixer.
   php_cs_fixer:
     enabled: true
     config:
       level: all
-    filter:
-      paths:
-        - 'src/*'
-        - 'boot/*'
-        - 'tests/*'
   # PHP Mess Detector (http://phpmd.org).
-  php_mess_detector:
-    enabled: true
-    filter:
-      paths:
-        - 'src/*'
-        - 'boot/*'
-        - 'tests/*'
+  php_mess_detector: true
   # Analyzes the size and structure of a PHP project.
-  php_pdepend:
-    enabled: true
-    excluded_dirs:
-      - tests
-      - vendor
+  php_pdepend: truer
   # Analyzes the size and structure of a PHP project.
-  php_loc:
-    enabled: true
-    excluded_dirs:
-      - tests
-      - vendor
-  # Code Coverage
-  php_code_coverage: true
+  php_loc: true
   # Runs Scrutinizer's PHP Analyzer Tool
   php_analyzer: true
   # PHP Code Similarity Analyzer
@@ -206,8 +182,6 @@ coding_style:
       general:
         use_tabs: false
         size: 4
-      switch:
-        indent_case: true
     spaces:
       general:
         linefeed_character: newline
