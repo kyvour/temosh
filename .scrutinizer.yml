@@ -304,7 +304,7 @@ coding_style:
       try:
         opening: new-line
         catch_on_new_line: false
-      finally_on_new_line: false
+        finally_on_new_line: false
     upper_lower_casing:
       keywords:
         general: lower
