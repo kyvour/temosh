@@ -15,15 +15,13 @@ before_install:
   - pecl channel-update pecl.php.net
   - pecl install mongodb
   - composer self-update --stable
-  - php --version
-  - composer --version
 
 install:
-  - composer install --verbose --no-interaction --no-suggest
+  - composer install --no-interaction --no-suggest
 
 script:
-  - vendor/bin/phpcs --standard=psr2 -n src/
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpcs --standard=psr2 -n ./src ./tests ./boot
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
