@@ -44,18 +44,9 @@ class ShellTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(SqlQuery::class, $this->shell->getSqlQuery());
     }
 
-    public function testSetHelper()
+    public function testGetDefaultHelperSet()
     {
-        $mock_helper = $this->getMockBuilder(HelperInterface::class)
-            ->setMethods(['getName'])
-            ->getMockForAbstractClass();
-        $mock_helper->expects($this->once())
-            ->method('getName')
-            ->willReturn('test_table');
-
-        $this->shell->setHelper($mock_helper);
-
-        $this->assertTrue($this->shell->getHelperSet()->has('test_table'));
+        $this->assertTrue($this->shell->getHelperSet()->has('temosh_question'));
     }
 
     public function testGetMongoClientFromWrongInput()

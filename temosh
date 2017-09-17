@@ -1,8 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 // Require BootLoader class because composer's autoloader isn't available yet.
 require __DIR__ . '/boot/BootLoader.php';
-\Temosh\Boot\BootLoader::boot(__DIR__);
 
-require __DIR__ . '/temosh_cli.php';
+if (!\Temosh\Boot\BootLoader::boot(__DIR__)) {
+    fwrite(STDERR, \Temosh\Boot\BootLoader::getBootError());
+    exit(1);
+}
+
+require __DIR__ . '/cli.php';
