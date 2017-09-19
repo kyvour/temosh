@@ -28,11 +28,6 @@ build:
 checks:
   php: true
 
-filter:
-  excluded_paths:
-    - "tests/"
-    - "vendor/*"
-
 tools:
   # Code Coverage
   php_code_coverage: false
@@ -48,7 +43,11 @@ tools:
   # Analyzes the size and structure of a PHP project.
   php_loc: true
   # Runs Scrutinizer's PHP Code Similarity Analyzer
-  php_sim: true
+  php_sim:
+    filter:
+      excluded_paths:
+        - "tests/"
+        - "vendor/*"
   # PHP CS Fixer.
   php_cs_fixer: true
   # Runs Scrutinizer's PHP Analyzer Tool
