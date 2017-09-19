@@ -39,7 +39,7 @@ tools:
     config:
       standard: phpcs.xml
   # Analyzes the size and structure of a PHP project.
-  php_pdepend: true
+  php_pdepend:
     filter:
       excluded_paths:
         - "tests/"
