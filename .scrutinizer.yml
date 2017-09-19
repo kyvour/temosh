@@ -33,7 +33,6 @@ tools:
   php_code_coverage: false
   external_code_coverage:
     timeout: 600
-    runs: 3
   # Code Sniffer
   php_code_sniffer:
     enabled: true
@@ -51,12 +50,16 @@ tools:
     excluded_dirs:
       - tests
       - vendor
+  # Runs Scrutinizer's PHP Code Similarity Analyzer
+  php_sim:
+    enabled: true
+    excluded_dirs:
+      - tests
+      - vendor
   # PHP CS Fixer.
   php_cs_fixer: true
   # Runs Scrutinizer's PHP Analyzer Tool
   php_analyzer: true
-  # Runs Scrutinizer's PHP Code Similarity Analyzer
-  php_sim: true
   # Tracking Code Changes/Stability
   php_changetracking: true
   # Security Advisory Checker
