@@ -40,14 +40,22 @@ tools:
       standard: phpcs.xml
   # Analyzes the size and structure of a PHP project.
   php_pdepend: true
+    filter:
+      excluded_paths:
+        - "tests/"
+        - "vendor/"
   # Analyzes the size and structure of a PHP project.
-  php_loc: true
+  php_loc:
+    filter:
+      excluded_paths:
+        - "tests/"
+        - "vendor/"
   # Runs Scrutinizer's PHP Code Similarity Analyzer
   php_sim:
     filter:
       excluded_paths:
         - "tests/"
-        - "vendor/*"
+        - "vendor/"
   # PHP CS Fixer.
   php_cs_fixer: true
   # Runs Scrutinizer's PHP Analyzer Tool
