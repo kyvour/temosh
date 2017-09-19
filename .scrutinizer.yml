@@ -43,22 +43,22 @@ tools:
     enabled: true
     filter:
       excluded_paths:
-        - tests
-        - vendor
+        - "*/tests/*"
+        - "*/vendor/*"
   # Analyzes the size and structure of a PHP project.
   php_loc:
     enabled: true
     filter:
       excluded_paths:
-        - tests
-        - vendor
+        - "*/tests/*"
+        - "*/vendor/*"
   # Runs Scrutinizer's PHP Code Similarity Analyzer
   php_sim:
     enabled: true
     filter:
       excluded_paths:
-        - tests
-        - vendor
+        - "*/tests/*"
+        - "*/vendor/*"
   # PHP CS Fixer.
   php_cs_fixer: true
   # Runs Scrutinizer's PHP Analyzer Tool
