@@ -55,6 +55,7 @@ class ReadCommand extends BaseCommand
             if ($query->isEmpty()) {
                 continue;
             }
+
             // Exit on "exit" query.
             if ($query->isExitCommand()) {
                 return;

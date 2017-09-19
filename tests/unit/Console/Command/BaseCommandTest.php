@@ -5,36 +5,17 @@ namespace Temosh\Test\Console\Command;
 use Temosh\Console\Command\ReadCommand;
 
 /**
- * @coversDefaultClass \Temosh\Console\Command\SelectCommand
- * @group Temosh
+ * @coversDefaultClass \Temosh\Console\Command\BaseCommand
  */
-class ReadCommandTest extends \PHPUnit_Framework_TestCase
+class BaseCommandTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @var \Temosh\Console\Command\ReadCommand
+     */
     private $command;
 
     /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->command = new ReadCommand();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        $this->command = null;
-    }
-
-    /**
-     * Data provider for testRequiredArguments
+     * Data provider for ::requiredArguments
      *
      * @return array
      */
@@ -46,7 +27,7 @@ class ReadCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider for testRequiredArguments
+     * Data provider for ::requiredOptions
      *
      * @return array
      */
@@ -62,30 +43,42 @@ class ReadCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests for required arguments for SelectCommand.
-     *
+     * @test
+     * @covers       \Temosh\Console\Command\BaseCommand::configure
      * @dataProvider requiredArgumentsProvider
-     *
-     * @param $argName
-     *  The argument name.
      */
-    public function testRequiredArguments($argName)
+    public function requiredArguments($argName)
     {
         $definition = $this->command->getDefinition();
         $this->assertTrue($definition->hasArgument($argName));
     }
 
     /**
-     * Tests for required arguments for SelectCommand.
-     *
+     * @test
+     * @covers       \Temosh\Console\Command\BaseCommand::configure
      * @dataProvider requiredOptionsProvider
-     *
-     * @param $optionName
-     *  The option name.
      */
-    public function testRequiredOptions($optionName)
+    public function requiredOptions($optionName)
     {
         $definition = $this->command->getDefinition();
         $this->assertTrue($definition->hasOption($optionName));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->command = new ReadCommand();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->command = null;
     }
 }

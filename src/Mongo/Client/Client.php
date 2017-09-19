@@ -179,12 +179,15 @@ class Client extends \MongoDB\Client implements ExtendedClientInterface
         $searchOptions = [
             'projection' => $fields,
         ];
+
         if ($sort !== null) {
             $searchOptions['sort'] = $sort;
         }
+
         if ($limit !== null) {
             $searchOptions['limit'] = $limit;
         }
+
         if ($skip !== null) {
             $searchOptions['skip'] = $skip;
         }

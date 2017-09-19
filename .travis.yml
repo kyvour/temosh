@@ -5,28 +5,23 @@ os:
   - linux
 
 php:
-  - 5.6
-  - 7.0
   - 7.1
 
 services:
   - mongodb
 
 before_install:
-  - sudo apt-get update
   - pecl channel-update pecl.php.net
   - pecl install mongodb
   - composer self-update --stable
-  - php --version
-  - composer --version
 
 install:
-  - composer install --verbose --no-interaction --no-suggest
+  - composer install --no-interaction --no-suggest
 
 script:
-  - vendor/bin/phpcs --standard=psr2 -n src/
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - ./build/scripts/phpunit.sh
+  - ./build/scripts/phpcs.sh
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/phpunit/report-coverage.clover.xml

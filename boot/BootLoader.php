@@ -69,8 +69,7 @@ class BootLoader
                 $classLoader = include $suggestion;
 
                 // Make sure that autoloader works.
-                if (
-                    is_a($classLoader, \Composer\Autoload\ClassLoader::class) &&
+                if (is_a($classLoader, \Composer\Autoload\ClassLoader::class) &&
                     $classLoader->loadClass($this->appClassName)
                 ) {
                     return true;

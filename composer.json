@@ -13,10 +13,10 @@
         "psr-4": { "Temosh\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Temosh\\Test\\": "tests/Temosh/Test" }
+        "psr-4": { "Temosh\\Test\\": "tests/unit" }
     },
     "require": {
-        "php": ">=5.6",
+        "php": "^7.1.3",
         "ext-mongodb": "*",
         "symfony/console": "^3.3",
         "mongodb/mongodb": "^1.1",
@@ -25,7 +25,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.20",
+        "symfony/phpunit-bridge": "^3.3",
         "squizlabs/php_codesniffer": "^3.0.2",
-        "symfony/phpunit-bridge": "^3.3"
+        "phpmd/phpmd": "^2.6",
+        "sebastian/phpcpd": "^3.0",
+        "phpmetrics/phpmetrics": "^1.10"
     }
 }

@@ -5,29 +5,21 @@ namespace Temosh\Test\Mongo\Connection;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Temosh\Mongo\Connection\ConnectionOptionsValidator;
 
+/**
+ * @coversDefaultClass \Temosh\Mongo\Connection\ConnectionOptionsValidator
+ */
 class ConnectionOptionsValidatorTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @var \Temosh\Mongo\Connection\ConnectionOptionsValidator
+     */
     private $validator;
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->validator = new ConnectionOptionsValidator();
-    }
-
     /**
-     * {@inheritdoc}
+     * @test
+     * @covers \Temosh\Mongo\Connection\ConnectionOptionsValidator::validateHost()
      */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        $this->validator = null;
-    }
-
-    public function testValidateHost()
+    public function validateHost()
     {
         $callable = $this->validator->validateHost();
         $this->assertTrue(is_callable($callable));
@@ -50,16 +42,22 @@ class ConnectionOptionsValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @covers       \Temosh\Mongo\Connection\ConnectionOptionsValidator::validateHost()
      * @dataProvider validateHostBadDataProvider
      */
-    public function testValidateHostBad($host)
+    public function validateHostBad($host)
     {
         $callable = $this->validator->validateHost();
         $this->expectException(InvalidArgumentException::class);
         $this->assertEquals($host, $callable($host));
     }
 
-    public function testValidatePort()
+    /**
+     * @test
+     * @covers \Temosh\Mongo\Connection\ConnectionOptionsValidator::validatePort()
+     */
+    public function validatePort()
     {
         $callable = $this->validator->validatePort();
         $this->assertTrue(is_callable($callable));
@@ -68,7 +66,7 @@ class ConnectionOptionsValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider for self::testValidatePortBad
+     * Data provider for ::testValidatePortBad
      */
     public function validatePortBadDataProvider()
     {
@@ -82,12 +80,32 @@ class ConnectionOptionsValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @covers       \Temosh\Mongo\Connection\ConnectionOptionsValidator::validatePort()
      * @dataProvider validatePortBadDataProvider
      */
-    public function testValidatePortBad($port)
+    public function validatePortBad($port)
     {
         $callable = $this->validator->validatePort();
         $this->expectException(InvalidArgumentException::class);
         $this->assertEquals($port, $callable($port));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->validator = new ConnectionOptionsValidator();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->validator = null;
     }
 }

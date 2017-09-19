@@ -8,7 +8,9 @@ namespace Temosh\Sql\Exception;
 class ParseSqlException extends SqlQueryException
 {
 
-    const REQUIRED_QUERY_STRUCTURE = <<<query
-SELECT [<Projections>] FROM <Target> [WHERE <Condition>*] [ORDER BY <Fields>* [ASC|DESC]*] [LIMIT <MaxRecords>] [[SKIP|OFFSET] <SkipRecords>]
-query;
+    const REQUIRED_QUERY_STRUCTURE = 'SELECT [<Projections>] FROM <Target> ' .
+    '[WHERE <Condition>*] ' .
+    '[ORDER BY <Fields>* [ASC|DESC]*] ' .
+    '[LIMIT <MaxRecords>] ' .
+    '[[SKIP|OFFSET] <SkipRecords>]';
 }
