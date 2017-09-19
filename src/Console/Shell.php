@@ -3,7 +3,6 @@
 namespace Temosh\Console;
 
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Temosh\Console\Helper\QuestionHelper;
 use Temosh\Mongo\Client\Client;
@@ -48,10 +47,6 @@ class Shell extends Application implements MongoShellInterface
     {
         parent::__construct(self::NAME, self::VERSION);
 
-        // Add required helper instance for application.
-        $helper = new QuestionHelper(new ConnectionOptionsNormalizer(), new ConnectionOptionsValidator());
-        $this->setHelper($helper);
-
         // This app doesn't have service container, so just create required objects here.
         $normalizer = new SqlNormalizer();
         $this->sqlQuery = new SqlQuery($normalizer);
@@ -61,11 +56,12 @@ class Shell extends Application implements MongoShellInterface
     /**
      * {@inheritdoc}
      */
-    public function setHelper(HelperInterface $helper)
+    protected function getDefaultHelperSet()
     {
-        $this->getHelperSet()->set($helper);
+        $set = parent::getDefaultHelperSet();
+        $set->set(new QuestionHelper(new ConnectionOptionsNormalizer(), new ConnectionOptionsValidator()));
 
-        return $this;
+        return $set;
     }
 
     /**
