@@ -63,13 +63,10 @@ class MongoQueryBuilder implements MongoQueryBuilderInterface
     public function getCollectionName()
     {
         $from = $this->getStatement()->from;
-        if (!count($from)) {
-            throw new MongoQueryBuildException('Unable retrieve collection name from SQL statement.');
-        }
-
         $expression = reset($from);
-        $collectionName = ($expression && $expression->table !== null) ? trim((string) $expression->table) : '';
-        if (empty($collectionName)) {
+
+        $collectionName = $expression ? trim((string) $expression->table) : '';
+        if ($collectionName === '') {
             throw new MongoQueryBuildException('Unable retrieve collection name from SQL statement.');
         }
 
