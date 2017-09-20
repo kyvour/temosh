@@ -6,27 +6,27 @@ build:
       version: "7.1"
       ini:
         memory_limit: "-1"
-  nodes:
-    custom-tests:
-      tests:
-        override:
-          -
-            # PHP Mess Detector.
-            command: ./build/scripts/phpmd.sh
-            analysis:
-              file: ./build/logs/phpmd/report-phpmd.xml
-              format: pmd-xml
-          -
-            # Copy/Paste Detector
-            command: ./build/scripts/phpcpd.sh
-            analysis:
-              file: ./build/logs/phpcpd/report-phpcpd.pmd.xml
-              format: pmd-xml
-    analysis:
-      project_setup:
-        override: ['true']
-      tests:
-        override: ['php-scrutinizer-run']
+
+  dependencies:
+    before:
+      - pecl channel-update pecl.php.net
+      - pecl install mongodb
+
+  tests:
+    override:
+      - 'php-scrutinizer-run'
+      -
+        # PHP Mess Detector.
+        command: ./build/scripts/phpmd.sh
+        analysis:
+          file: ./build/logs/phpmd/report-phpmd.xml
+          format: pmd-xml
+      -
+        # Copy/Paste Detector
+        command: ./build/scripts/phpcpd.sh
+        analysis:
+          file: ./build/logs/phpcpd/report-phpcpd.pmd.xml
+          format: pmd-xml
 
 checks:
   php: true
