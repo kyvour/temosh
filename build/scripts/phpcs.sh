@@ -6,6 +6,6 @@ echo "Run PHP Code Sniffer"
 
 mkdir -p ${PHPCS_LOGS_DIR}
 
-./vendor/bin/phpcs --standard=./phpcs.xml \
+./vendor/bin/phpcs --standard=./phpcs.xml.dist \
     --report=full \
     --report-checkstyle=${PHPCS_LOGS_DIR}/report-phpcs.checkstyle.xml
