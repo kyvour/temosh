@@ -10,6 +10,8 @@ build:
   tests:
     override:
       -
+        command: php-scrutinizer-run
+      -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh
         analysis:
@@ -115,14 +117,13 @@ tools:
 
   # Runs Scrutinizer's PHP Analyzer Tool
   php_analyzer:
-    enabled: true
+    enabled: false
     filter:
       paths:
         - boot/*
         - src/*
         - tests/*
 
-  php-scrutinizer-run: true
   # Tracking Code Changes/Stability
   php_changetracking: true
   # Security Advisory Checker
