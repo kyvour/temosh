@@ -1,15 +1,33 @@
 build:
-  dependencies:
-    before:
-      - pecl channel-update pecl.php.net
   environment:
     postgresql: false
     redis: false
-    mongodb: false
     php:
       version: "7.1"
       ini:
         memory_limit: "-1"
+    variables:
+      PHPMD_LOGS_DIR: ./build/logs/phpmd
+      PHPCPD_LOGS_DIR: ./build/logs/phpcpd
+
+  dependencies:
+    before:
+      - pecl channel-update pecl.php.net
+
+  tests:
+    before:
+      -
+        # PHP Mess Detector.
+        command:  ./build/scripts/phpmd.sh
+        analysis:
+          file:   ${PHPMD_LOGS_DIR}/report-phpmd.xml
+          format: pmd-xml
+      -
+        # Copy/Paste Detector
+        command:  ./build/scripts/phpcpd.sh
+        analysis:
+          file:   ${PHPCPD_LOGS_DIR}/report-phpcpd.pmd.xml
+          format: pmd-xml
 
 checks:
   php: true
@@ -20,14 +38,16 @@ tools:
     enabled: true
     timeout: 600
     filter:
-      paths: ["src/*"]
+      paths:
+        - src/*
 
   # Scrutinizer's code coverage
   php_code_coverage:
     enabled: false
     test_command: phpunit -c phpunit.xml.dist
     filter:
-      paths: ["src/*"]
+      paths:
+        - src/*
 
   # Code Sniffer
   php_code_sniffer:
@@ -35,7 +55,10 @@ tools:
     config:
       standard: phpcs.xml.dist
     filter:
-      paths: ["boot/*", "src/*", "tests/*"]
+      paths:
+        - boot/*
+        - src/*
+        - tests/*
 
   # PHP CS Fixer.
   php_cs_fixer:
@@ -43,7 +66,10 @@ tools:
     config:
       level: all
     filter:
-      paths: ["boot/*", "src/*", "tests/*"]
+      paths:
+        - boot/*
+        - src/*
+        - tests/*
 
   # PHP Mess Detector
   php_mess_detector:
@@ -51,34 +77,54 @@ tools:
     config:
       ruleset: phpmd.xml.dist
     filter:
-      paths: ["boot/*", "src/*"]
+      paths:
+        - boot/*
+        - src/*
 
   # Analyzes the size and structure of a PHP project.
   php_loc:
     enabled: true
-    excluded_dirs: ["build", "resources", "tests", "vendor"]
+    excluded_dirs:
+      - build
+      - resources
+      - tests
+      - vendor
 
   # Analyzes the size and structure of a PHP project.
   php_pdepend:
     enabled: true
-    excluded_dirs: ["build", "resources", "tests", "vendor"]
+    excluded_dirs:
+      - build
+      - resources
+      - tests
+      - vendor
 
   # PHP Copy-Paste detector.
   php_cpd:
-    enabled: true
-    excluded_dirs: ["build", "resources", "tests", "vendor"]
+    enabled: false
+    excluded_dirs:
+      - build
+      - resources
+      - tests
+      - vendor
 
   # Runs Scrutinizer's PHP Code Similarity Analyzer
   php_sim:
     enabled: true
     filter:
-      excluded_paths: ["build/", "resources/", "tests/", "vendor/"]
+      excluded_paths:
+        - build/
+        - resources/
+        - tests/
+        - vendor/
 
   # Runs Scrutinizer's PHP Analyzer Tool
   php_analyzer:
     enabled: true
     filter:
-      paths: ["src/*", "tests/*"]
+      paths:
+        - src/*
+        - tests/*
 
   # Tracking Code Changes/Stability
   php_changetracking: true
