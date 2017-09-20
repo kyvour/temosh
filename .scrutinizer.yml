@@ -6,9 +6,6 @@ build:
       version: "7.1"
       ini:
         memory_limit: "-1"
-    variables:
-      PHPMD_LOGS_DIR: ./build/logs/phpmd
-      PHPCPD_LOGS_DIR: ./build/logs/phpcpd
 
   dependencies:
     before:
@@ -18,15 +15,15 @@ build:
     before:
       -
         # PHP Mess Detector.
-        command:  ./build/scripts/phpmd.sh
+        command: ./build/scripts/phpmd.sh
         analysis:
-          file:   ${PHPMD_LOGS_DIR}/report-phpmd.xml
+          file: ./build/logs/phpmd/report-phpmd.xml
           format: pmd-xml
       -
         # Copy/Paste Detector
-        command:  ./build/scripts/phpcpd.sh
+        command: ./build/scripts/phpcpd.sh
         analysis:
-          file:   ${PHPCPD_LOGS_DIR}/report-phpcpd.pmd.xml
+          file: ./build/logs/phpcpd/report-phpcpd.pmd.xml
           format: pmd-xml
 
 checks:
