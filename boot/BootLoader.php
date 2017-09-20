@@ -22,9 +22,9 @@ class BootLoader
      *  Contains an array with possible composer autoload files relative to the app root.
      */
     protected const AUTOLOAD_PATHS = [
-        // 'local' means that autoload.php is inside of app (app is its own Composer project).
+        // 'local' autoload.php inside of app (app is its own Composer project).
         'local' => 'vendor/autoload.php',
-        // 'global' means autoload.php is outside of app (app is a dependency of a bigger project).
+        // 'global' autoload.php outside of app (app is a dependency of a bigger project).
         'global' => '../../../vendor/autoload.php',
     ];
 
