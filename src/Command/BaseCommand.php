@@ -1,6 +1,8 @@
 <?php
 
-namespace Temosh\Console\Command;
+declare(strict_types=1);
+
+namespace Temosh\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,26 +15,29 @@ use Temosh\Mongo\Connection\ConnectionOptions;
 /**
  * Class SelectCommand
  *
- * The command for retrieving dta from MongoDB.
+ * The command for retrieving data from MongoDB.
  */
 abstract class BaseCommand extends Command
 {
-
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
-        $definition = new InputDefinition([
-            $this->hostOption(),
-            $this->portOption(),
-            $this->usernameOption(),
-            $this->passwordOption(),
-            $this->authenticationDatabaseOption(),
-            $this->dbArgument(),
-        ]);
+        $definition = new InputDefinition(
+            [
+                $this->hostOption(),
+                $this->portOption(),
+                $this->usernameOption(),
+                $this->passwordOption(),
+                $this->authenticationDatabaseOption(),
+                $this->dbArgument(),
+            ]
+        );
 
         $this->setName('read')
             ->setDescription('Selects data from MongoDB collection.')
@@ -40,47 +45,47 @@ abstract class BaseCommand extends Command
     }
 
     /**
-     * DB argument definition.
+     * Returns the database name argument definition.
      *
      * @return \Symfony\Component\Console\Input\InputArgument
      */
-    protected function dbArgument()
+    protected function dbArgument(): InputArgument
     {
         return new InputArgument(
             'db',
             InputArgument::REQUIRED,
-            'database name to connect to'
+            'the database name to connect to'
         );
     }
 
     /**
-     * Host option definition.
+     * Returns the server address option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function hostOption()
+    protected function hostOption(): InputOption
     {
         return new InputOption(
             'host',
             'H',
             InputOption::VALUE_OPTIONAL,
-            'server to connect to',
+            'the server address to connect to',
             ConnectionOptions::DEFAULT_HOST
         );
     }
 
     /**
-     * Port option definition.
+     * Returns the port option definition.
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function portOption()
+    protected function portOption(): InputOption
     {
         return new InputOption(
             'port',
             'P',
             InputOption::VALUE_OPTIONAL,
-            'port to connect to',
+            'the port number to connect to',
             ConnectionOptions::DEFAULT_PORT
         );
     }
@@ -90,14 +95,14 @@ abstract class BaseCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function usernameOption()
+    protected function usernameOption(): InputOption
     {
         return new InputOption(
             'user',
             'u',
             InputOption::VALUE_OPTIONAL,
-            'username for authentication',
-            ''
+            'the username for authentication',
+            ConnectionOptions::DEFAULT_USERNAME
         );
     }
 
@@ -107,14 +112,14 @@ abstract class BaseCommand extends Command
      * @return \Symfony\Component\Console\Input\InputOption
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function passwordOption()
+    protected function passwordOption(): InputOption
     {
         return new InputOption(
             'pass',
             'p',
             InputOption::VALUE_OPTIONAL,
-            'password for authentication',
-            ''
+            'the password for authentication',
+            ConnectionOptions::DEFAULT_PASSWORD
         );
     }
 
@@ -123,20 +128,23 @@ abstract class BaseCommand extends Command
      *
      * @return \Symfony\Component\Console\Input\InputOption
      */
-    protected function authenticationDatabaseOption()
+    protected function authenticationDatabaseOption(): InputOption
     {
         return new InputOption(
             'authenticationDatabase',
             null,
             InputOption::VALUE_OPTIONAL,
-            'database for authentication'
+            'the name for authentication database',
+            ConnectionOptions::DEFAULT_AUTH_DB
         );
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         parent::interact($input, $output);
 
@@ -169,7 +177,7 @@ abstract class BaseCommand extends Command
         }
 
         // Set auth database to null if its value is empty.
-        $authDb = trim($input->getOption('authenticationDatabase'));
-        $input->setOption('authenticationDatabase', $authDb ?: null);
+        $authDb = trim((string) $input->getOption('authenticationDatabase'));
+        $input->setOption('authenticationDatabase', $authDb);
     }
 }

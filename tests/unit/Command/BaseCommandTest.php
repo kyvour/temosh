@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Temosh\Test\Command;
 
 use Temosh\Command\ReadCommand;
@@ -17,9 +19,9 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * Data provider for ::requiredArguments
      *
-     * @return array
+     * @return string[]
      */
-    public function requiredArgumentsProvider()
+    public function requiredArgumentsProvider(): array
     {
         return [
             ['db'],
@@ -29,9 +31,9 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * Data provider for ::requiredOptions
      *
-     * @return array
+     * @return string[]
      */
-    public function requiredOptionsProvider()
+    public function requiredOptionsProvider(): array
     {
         return [
             ['host'],
@@ -46,8 +48,10 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers       \Temosh\Command\BaseCommand::configure
      * @dataProvider requiredArgumentsProvider
+     *
+     * @param string $argName
      */
-    public function requiredArguments($argName)
+    public function requiredArguments($argName): void
     {
         $definition = $this->command->getDefinition();
         $this->assertTrue($definition->hasArgument($argName));
@@ -57,8 +61,10 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
      * @test
      * @covers       \Temosh\Command\BaseCommand::configure
      * @dataProvider requiredOptionsProvider
+     *
+     * @param string $optionName
      */
-    public function requiredOptions($optionName)
+    public function requiredOptions($optionName): void
     {
         $definition = $this->command->getDefinition();
         $this->assertTrue($definition->hasOption($optionName));
@@ -67,7 +73,7 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->command = new ReadCommand();
@@ -76,7 +82,7 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->command = null;

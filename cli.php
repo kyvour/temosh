@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Temosh\Console\Command\ReadCommand;
+use Temosh\Command\ReadCommand;
 use Temosh\Console\Shell;
 
 $application = new Shell();
