@@ -69,7 +69,7 @@ tools:
     excluded_dirs: ["build", "resources", "tests", "vendor"]
 
   # Runs Scrutinizer's PHP Code Similarity Analyzer
-  php_sim: true
+  php_sim:
     enabled: true
     filter:
       excluded_paths: ["build/", "resources/", "tests/", "vendor/"]
