@@ -10,11 +10,10 @@ build:
   dependencies:
     before:
       - pecl channel-update pecl.php.net
-    override:
       - pecl install mongodb
 
   tests:
-    override:
+    before:
       -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh
