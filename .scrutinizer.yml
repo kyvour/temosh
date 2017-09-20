@@ -7,15 +7,8 @@ build:
       ini:
         memory_limit: "-1"
 
-  dependencies:
-    before:
-      - pecl channel-update pecl.php.net
-      - pecl install mongodb
-
   tests:
     override:
-      -
-        command: php-scrutinizer-run
       -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh
@@ -129,6 +122,7 @@ tools:
         - src/*
         - tests/*
 
+  php-scrutinizer-run: true
   # Tracking Code Changes/Stability
   php_changetracking: true
   # Security Advisory Checker
