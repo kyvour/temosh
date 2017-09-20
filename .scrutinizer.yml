@@ -7,6 +7,12 @@ build:
       ini:
         memory_limit: "-1"
 
+  dependencies:
+    before:
+      - pecl channel-update pecl.php.net
+    override:
+      - pecl install mongodb
+
   tests:
     override:
       -

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Temosh\Command;
 
 use MongoDB\Driver\Exception\Exception as MongoDbDriverException;
-use MongoDB\Exception\Exception as MongoDbException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,7 +34,7 @@ class ReadCommand extends BaseCommand
         try {
             $client = $app->getMongoClientFromInput($input);
             $client->checkConnection();
-        } catch (MongoDbDriverException | MongoDbException $e) {
+        } catch (MongoDbDriverException $e) {
             $output->writeln(
                 [
                     '<error>Connection to the database failed.</error>',
@@ -92,7 +91,7 @@ class ReadCommand extends BaseCommand
             try {
                 $result = $client->executeSelectStatement($sqlQueryStatement);
                 $this->printResults($output, $result);
-            } catch (MongoDbDriverException | MongoDbException $e) {
+            } catch (MongoDbDriverException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
                 continue;
             } catch (\Exception $e) {
