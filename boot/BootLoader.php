@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Temosh\Boot;
 
 /**
- * Class BootLoader
- * Initialize composer autoloader when cli is starting.
+ * Initializes composer autoloader when cli is starting.
  */
 class BootLoader
 {
@@ -36,8 +35,8 @@ class BootLoader
      * @param $appClass
      *  The fully qualified name of the application class.
      *
-     * @return bool Returns true if boot process was successful, false otherwise.
-     * Returns true if boot process was successful, false otherwise.
+     * @return bool
+     *  Returns true if boot process was successful, false otherwise.
      */
     public static function boot(string $basePath, string $appClass): bool
     {
