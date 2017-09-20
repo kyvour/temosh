@@ -13,7 +13,7 @@ build:
       - pecl install mongodb
 
   tests:
-    before:
+    override:
       -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh
