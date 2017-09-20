@@ -32,6 +32,7 @@ tools:
     timeout: 600
     filter:
       paths:
+        - boot/*
         - src/*
 
   # Scrutinizer's code coverage
@@ -40,6 +41,7 @@ tools:
     test_command: phpunit -c phpunit.xml.dist
     filter:
       paths:
+        - boot/*
         - src/*
 
   # Code Sniffer
@@ -116,6 +118,7 @@ tools:
     enabled: true
     filter:
       paths:
+        - boot/*
         - src/*
         - tests/*
 
