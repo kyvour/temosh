@@ -14,8 +14,10 @@ class BootLoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @covers \Temosh\Boot\BootLoader::boot()
+     *
+     * @return void
      */
-    public function testBoot(): void
+    public function boot(): void
     {
         $appDir = dirname(__DIR__, 2);
         $existingClass = self::class;
