@@ -13,5 +13,5 @@ mkdir -p ${PHPMETRICS_LOGS_DIR}
     --report-html=${PHPMETRICS_LOGS_DIR}/report-phpmetrics.html \
     --report-xml=${PHPMETRICS_LOGS_DIR}/report-phpmetrics.xml \
     --extensions="php" \
-    --excluded-dirs="(vendor|tests)" \
+    --excluded-dirs="(vendor|tests|cli\.php)" \
     ./
