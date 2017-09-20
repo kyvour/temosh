@@ -6,10 +6,6 @@ use Temosh\Console\Command\ReadCommand;
 use Temosh\Console\Shell;
 
 $application = new Shell();
+$command = $application->add(new ReadCommand());
 
-$command = new ReadCommand();
-
-$application->add($command);
-
-$application->setDefaultCommand($command->getName(), true);
-$application->run();
+$application->setDefaultCommand($command->getName(), true)->run();

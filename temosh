@@ -6,9 +6,11 @@ declare(strict_types=1);
 // Require BootLoader class because composer's autoloader isn't available yet.
 require __DIR__ . '/boot/BootLoader.php';
 
+// Exit if composer's autoloader wasn't included for some reasons.
 if (!\Temosh\Boot\BootLoader::boot(__DIR__)) {
-    fwrite(STDERR, \Temosh\Boot\BootLoader::getBootError());
+    fwrite(STDERR, \Temosh\Boot\BootLoader::BOOT_ERROR);
     exit(1);
 }
 
+// Include entry script and run the application.
 require __DIR__ . '/cli.php';
