@@ -14,7 +14,8 @@ build:
 
   tests:
     override:
-      - 'php-scrutinizer-run'
+      -
+        command: php-scrutinizer-run
       -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh
@@ -27,10 +28,6 @@ build:
         analysis:
           file: ./build/logs/phpcpd/report-phpcpd.pmd.xml
           format: pmd-xml
-  analysis:
-    tests:
-      override:
-        - 'php-scrutinizer-run'
 
 checks:
   php: true
