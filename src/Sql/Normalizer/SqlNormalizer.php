@@ -14,12 +14,12 @@ class SqlNormalizer implements SqlNormalizerInterface
      * An array with query regex patterns.
      */
     const QUERY_STRUCTURE_PATTERN = [
-        'select' => 'select\s+(?<select>.*?)',
-        'from' => '\s+from\s+(?<from>.*?)',
-        'where' => '(\s+where\s+(?<where>.*?))?',
-        'order' => '(\s+order\s+by\s+(?<order>.*?))?',
-        'limit' => '(\s+limit\s+(?<limit>\d+?))?',
-        'offset' => '(\s+(offset|skip)\s+(?<offset>\d+?))?',
+        'select' => 'select\s+(?P<select>.*?)',
+        'from' => '\s+from\s+(?P<from>.*?)',
+        'where' => '(\s+where\s+(?P<where>.*?))?',
+        'order' => '(\s+order\s+by\s+(?P<order>.*?))?',
+        'limit' => '(\s+limit\s+(?P<limit>\d+?))?',
+        'offset' => '(\s+(offset|skip)\s+(?P<offset>\d+?))?',
     ];
 
     /**
@@ -64,8 +64,7 @@ class SqlNormalizer implements SqlNormalizerInterface
         $regex = '/^\s*' . implode('', static::QUERY_STRUCTURE_PATTERN) . '\s*$/i';
         $groups = [];
 
-        $isMatch = @preg_match($regex, $string, $groups);
-        if (!$isMatch) {
+        if (!preg_match($regex, (string) $string, $groups)) {
             // Unsupported query format.
             throw new ParseSqlException('Illegal query structure.');
         }

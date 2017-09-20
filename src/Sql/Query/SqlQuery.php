@@ -125,7 +125,7 @@ class SqlQuery implements SqlQueryInterface
         }
 
         /** @var \PhpMyAdmin\SqlParser\Statements\SelectStatement $statement */
-        $statement = @$parser->statements[0];
+        $statement = reset($parser->statements);
         if (!$statement) {
             throw new ParseSqlException('Unable to parse query string');
         }
