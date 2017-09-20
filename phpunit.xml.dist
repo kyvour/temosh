@@ -27,6 +27,7 @@
     <filter>
         <whitelist>
             <directory suffix=".php">src</directory>
+            <directory suffix=".php">boot</directory>
             <exclude>
                 <directory>vendor</directory>
                 <directory>tests</directory>

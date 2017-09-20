@@ -10,7 +10,10 @@
         "temosh"
     ],
     "autoload": {
-        "psr-4": { "Temosh\\": "src/" }
+        "psr-4": {
+            "Temosh\\": "src/",
+            "Temosh\\Boot\\": "boot/"
+        }
     },
     "autoload-dev": {
         "psr-4": { "Temosh\\Test\\": "tests/unit" }
