@@ -35,7 +35,7 @@ class ReadCommand extends BaseCommand
         try {
             $client = $app->getMongoClientFromInput($input);
             $client->checkConnection();
-        } catch (MongoDbException | MongoDbDriverException $e) {
+        } catch (MongoDbDriverException | MongoDbException $e) {
             $output->writeln(
                 [
                     '<error>Connection to the database failed.</error>',
@@ -92,7 +92,7 @@ class ReadCommand extends BaseCommand
             try {
                 $result = $client->executeSelectStatement($sqlQueryStatement);
                 $this->printResults($output, $result);
-            } catch (MongoDbException | MongoDbDriverException $e) {
+            } catch (MongoDbDriverException | MongoDbException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
                 continue;
             } catch (\Exception $e) {
