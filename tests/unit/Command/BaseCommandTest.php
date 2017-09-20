@@ -1,16 +1,16 @@
 <?php
 
-namespace Temosh\Test\Console\Command;
+namespace Temosh\Test\Command;
 
-use Temosh\Console\Command\ReadCommand;
+use Temosh\Command\ReadCommand;
 
 /**
- * @coversDefaultClass \Temosh\Console\Command\BaseCommand
+ * @coversDefaultClass \Temosh\Command\BaseCommand
  */
 class BaseCommandTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Temosh\Console\Command\ReadCommand
+     * @var \Temosh\Command\ReadCommand
      */
     private $command;
 
@@ -44,7 +44,7 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers       \Temosh\Console\Command\BaseCommand::configure
+     * @covers       \Temosh\Command\BaseCommand::configure
      * @dataProvider requiredArgumentsProvider
      */
     public function requiredArguments($argName)
@@ -55,7 +55,7 @@ class BaseCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @covers       \Temosh\Console\Command\BaseCommand::configure
+     * @covers       \Temosh\Command\BaseCommand::configure
      * @dataProvider requiredOptionsProvider
      */
     public function requiredOptions($optionName)

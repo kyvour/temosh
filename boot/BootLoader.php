@@ -12,26 +12,26 @@ namespace Temosh\Boot;
 class BootLoader
 {
     /**
-     * @const string BOOT_ERROR_MSG
+     * @var string BOOT_ERROR_MSG
      *  Contains an error message for autoload fail.
      */
     public const BOOT_ERROR = 'Unable to load autoload.php.' . PHP_EOL .
     'Run composer install to fetch dependencies and write autoload.php.' . PHP_EOL;
 
     /**
-     * @const string AUTOLOADER_CLASS
+     * @var string AUTOLOADER_CLASS
      *  Contains a fully qualified name for the autoloader class.
      */
     protected const AUTOLOADER_CLASS = \Composer\Autoload\ClassLoader::class;
 
     /**
-     * @const string APPLICATION_CLASS
+     * @var string APPLICATION_CLASS
      *  Contains a fully qualified name for the application class.
      */
     protected const APPLICATION_CLASS = \Temosh\Console\Shell::class;
 
     /**
-     * @const array<string, string> AUTOLOAD_SUGGESTIONS
+     * @var array<string, string> AUTOLOAD_SUGGESTIONS
      *  Contains an array with possible composer autoload files relative to the app root.
      */
     protected const AUTOLOAD_SUGGESTIONS = [
