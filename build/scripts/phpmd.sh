@@ -2,7 +2,9 @@
 
 PHPMD_LOGS_DIR=./build/logs/phpmd
 
-echo "Run PHP Mess Detector"
+printf -- "\n-----------------------"
+printf -- "\n Run PHP Mess Detector "
+printf -- "\n-----------------------\n"
 
 mkdir -p ${PHPMD_LOGS_DIR}
 

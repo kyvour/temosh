@@ -8,7 +8,7 @@ build:
         memory_limit: "-1"
 
   tests:
-    before:
+    override:
       -
         # PHP Mess Detector.
         command: ./build/scripts/phpmd.sh

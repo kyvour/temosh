@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-echo "Run PHP Metrics analyzer"
-
 PHPMETRICS_LOGS_DIR=./build/logs/phpmetrics
+
+printf -- "\n--------------------------"
+printf -- "\n Run PHP Metrics analyzer "
+printf -- "\n--------------------------\n"
 
 mkdir -p ${PHPMETRICS_LOGS_DIR}
 

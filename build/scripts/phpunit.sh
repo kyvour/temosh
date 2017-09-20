@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-echo "Run PHP Unit"
-
 PHPUNIT_LOGS_DIR=./build/logs/phpunit
+
+printf -- "\n--------------------"
+printf -- "\n Run PHP Unit tests "
+printf -- "\n--------------------\n"
 
 mkdir -p ${PHPUNIT_LOGS_DIR}
 

@@ -2,7 +2,9 @@
 
 PHPCPD_LOGS_DIR=./build/logs/phpcpd
 
-echo "Run PHP Copy-Paste Detector"
+printf -- "\n-----------------------------"
+printf -- "\n Run PHP Copy-Paste Detector "
+printf -- "\n-----------------------------\n"
 
 mkdir -p ${PHPCPD_LOGS_DIR}
 

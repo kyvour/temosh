@@ -2,7 +2,9 @@
 
 PHPCS_LOGS_DIR=./build/logs/phpcs
 
-echo "Run PHP Code Sniffer"
+printf -- "\n----------------------"
+printf -- "\n Run PHP Code Sniffer "
+printf -- "\n----------------------\n"
 
 mkdir -p ${PHPCS_LOGS_DIR}
 
