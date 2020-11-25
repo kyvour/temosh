@@ -1,3 +1,6 @@
+# this repository was moved to [https://github.com/andrew-yustyk/temosh](https://github.com/andrew-yustyk/temosh)
+
+
 [![Build Status](https://travis-ci.org/kyvour/temosh.svg?branch=master)](https://travis-ci.org/kyvour/temosh)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kyvour/temosh/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kyvour/temosh/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/kyvour/temosh/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kyvour/temosh/?branch=master)
